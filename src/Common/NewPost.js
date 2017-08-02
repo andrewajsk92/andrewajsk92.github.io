@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import {ButtonToolbar, Button} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import {withRouter} from 'react-router';
 import * as firebase from 'firebase';
 
 class NewPost extends Component{
@@ -10,8 +11,7 @@ class NewPost extends Component{
 		super(props);
 		this.state = {
 			Title: '',
-			Price: '',
-      Pics: ''
+			Price: ''
 		}
 		this.handleChangeTitle = this.handleChangeTitle.bind(this);
 		this.handleChangePrice = this.handleChangePrice.bind(this);
@@ -26,36 +26,42 @@ class NewPost extends Component{
 	addPost (e){
     e.preventDefault();
 
+    const pic = this.state.Pics;
 		const rootRef = firebase.database().ref().child('Buy');
-    const storageRef = firebase.storage().ref('Images/' + this.state.file.name);
-    const uploadTask = storageRef.put(this.state.file);
+    if(pic != null){
+      const storageRef = firebase.storage().ref('Images/' + pic.name);
+      const uploadTask = storageRef.put(pic);
 
-		var that = this;
-		
-    uploadTask.on("state_changed", (snapshot) => {
+      uploadTask.on("state_changed", (snapshot) => {
 
-    }, (error) => {
-      //Errors
-    }, () => {
-      //Handle successful uploads
-      var pics = uploadTask.snapshot.downloadURL;
+      }, (error) => {
+        //Errors
+      }, () => {
+        //Handle successful uploads
+        var pics = uploadTask.snapshot.downloadURL;
+        var item = {
+          Title: this.state.Title,
+          PostedDate: new Date().toString(),
+          Price: this.state.Price,
+          Availability: true,
+          Pics: pics
+        }
+        rootRef.push(item);
+        console.log(pics);
+      });
+  		console.log("PUSHED WTF YES PIC");
+    } else{
       var item = {
         Title: this.state.Title,
         PostedDate: new Date().toString(),
         Price: this.state.Price,
         Availability: true,
-        Pics: pics
-
-        // Title: "TEST",
-        // Pics: "TESTING NONE",
-        // PostedDate: new Date().toString(),
-        // Price: 50,
-        // Availability: true
+        Pic: null
       }
       rootRef.push(item);
-      console.log(pics);
-    });
-		console.log("PUSHED WTF");
+      console.log("PUSHED WTF NO PIC");
+
+    }
 	}
 
 	handleChangeTitle(event){
@@ -72,21 +78,25 @@ class NewPost extends Component{
     e.preventDefault();
 
     let reader = new FileReader();
-    let file = e.target.files[0];
+    let pics = e.target.files[0];
 
     reader.onloadend = () => {
       this.setState({
-        file: file,
+        Pics: pics,
         imagePreviewUrl: reader.result
       });
     }
 
-    reader.readAsDataURL(file)
+    reader.readAsDataURL(pics);
   }
 
 	handleSubmit(event){
 		console.log("WUT");
 	}
+
+  cancel(){
+    console.log("HMM");
+  }
 
 	render(){
     let {imagePreviewUrl} = this.state;
@@ -112,13 +122,14 @@ class NewPost extends Component{
 						</div>
 
             <div>
-              <input type="file" onChange={(e)=>this.handleChangeImage(e)} />
+              <b> Pics* (PNG, JPEG, GIF only)</b>
+              <input type="file" accept="image/x-png,image/gif,image/jpeg" onChange={(e)=>this.handleChangeImage(e)}/>
             </div>
 
 				    <div>
 				    	<ButtonToolbar>
   							<Button type="submit" value="Submit"  bsStyle="primary">Post</Button>
-                <Button>Cancel</Button>
+                <Button onClick={this.cancel}>Cancel</Button>
 					    </ButtonToolbar>
 			    	</div>
 
@@ -132,61 +143,6 @@ class NewPost extends Component{
 		)
 	}
 }
-
-// class ImageUpload extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {file: '',imagePreviewUrl: ''};
-//   }
-
-//   _handleSubmit(e) {
-//     e.preventDefault();
-//     // TODO: do something with -> this.state.file
-//     console.log('handle uploading-', this.state.file);
-//   }
-
-//   _handleImageChange(e) {
-//     e.preventDefault();
-
-//     let reader = new FileReader();
-//     let file = e.target.files[0];
-
-//     reader.onloadend = () => {
-//       this.setState({
-//         file: file,
-//         imagePreviewUrl: reader.result
-//       });
-//     }
-
-//     reader.readAsDataURL(file)
-//   }
-
-//   render() {
-//     let {imagePreviewUrl} = this.state;
-//     let $imagePreview = null;
-//     if (imagePreviewUrl) {
-//       $imagePreview = (<img src={imagePreviewUrl} />);
-//     } else {
-//       $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
-//     }
-
-//     return (
-//       <div className="previewComponent">
-//         <form onSubmit={(e)=>this._handleSubmit(e)}>
-//           <input className="fileInput" 
-//             type="file" 
-//             onChange={(e)=>this._handleImageChange(e)} />
-//           <button className="submitButton" 
-//             type="submit" 
-//             onClick={(e)=>this._handleSubmit(e)}>Upload Image</button>
-//         </form>
-//         <div className="imgPreview">
-//           {$imagePreview}
-//         </div>
-//       </div>
-//     )
-//   }
-// }
 
 export default NewPost;
 
