@@ -10,7 +10,8 @@ class NewPost extends Component{
 		super(props);
 		this.state = {
 			Title: '',
-			Price: ''
+			Price: '',
+      Pics: ''
 		}
 		this.handleChangeTitle = this.handleChangeTitle.bind(this);
 		this.handleChangePrice = this.handleChangePrice.bind(this);
@@ -26,19 +27,34 @@ class NewPost extends Component{
     e.preventDefault();
 
 		const rootRef = firebase.database().ref().child('Buy');
-		var item = {
-			Title: this.state.Title,
-			PostedDate: new Date().toString(),
-			Price: this.state.Price,
-			Availability: true
+    const storageRef = firebase.storage().ref('Images/' + this.state.file.name);
+    const uploadTask = storageRef.put(this.state.file);
 
-  //     Title: "TEST",
-  //     Pics: "TESTING NONE",
-  //     PostedDate: new Date().toString(),
-  //     Price: 50,
-  //     Availability: true
-		}
-		rootRef.push(item);
+		var that = this;
+		
+    uploadTask.on("state_changed", (snapshot) => {
+
+    }, (error) => {
+      //Errors
+    }, () => {
+      //Handle successful uploads
+      var pics = uploadTask.snapshot.downloadURL;
+      var item = {
+        Title: this.state.Title,
+        PostedDate: new Date().toString(),
+        Price: this.state.Price,
+        Availability: true,
+        Pics: pics
+
+        // Title: "TEST",
+        // Pics: "TESTING NONE",
+        // PostedDate: new Date().toString(),
+        // Price: 50,
+        // Availability: true
+      }
+      rootRef.push(item);
+      console.log(pics);
+    });
 		console.log("PUSHED WTF");
 	}
 

@@ -32,10 +32,8 @@ class Home extends Component {
         // const priceRef = rootRef.child('BuyItem1');
         rootRef.on("value", snap => {
         	var items = [];
-        	var that = this;
-        	
 
-        	snap.forEach(function(data) {
+        	snap.forEach((data) => {
         		var item = {
         			Title: data.val().Title,
         			Pics: data.val().Pics,
@@ -44,7 +42,7 @@ class Home extends Component {
         			Availability: data.val().Availability
         		}
         		items.push(item);
-        		that.setState({items: items});
+        		this.setState({items: items});
         	})
 
 
