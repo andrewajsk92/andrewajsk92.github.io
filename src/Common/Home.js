@@ -7,7 +7,7 @@ import SearchBar from './SearchBar.js';
 
 import * as firebase from 'firebase';
 // import NoImageIcon from './NoImageIcon.jpeg';
-import ControlledCarousel from '../Tech/ControlledCarousel';
+import UncontrolledCarousel from '../Tech/UncontrolledCarousel';
 
 
 
@@ -49,6 +49,7 @@ class Home extends Component {
     		}
     		items.push(item);
     		this.setState({items: items});
+        // console.log(data.val());
     	})
     })
   }
@@ -108,9 +109,9 @@ class Content extends Component{
 
 		return (
 			<ul>
-				<li> <Link to={"Detail/" + BuyOrSell + "/" +this.props.contentData.Key} params={{testvalue:"hello"}}> {this.props.contentData.Title} </Link></li>
+				<li> <Link to={"Detail/" + BuyOrSell + "/" +this.props.contentData.Key} > {this.props.contentData.Title} </Link></li>
 				<li> {this.props.contentData.Price}</li>
-				<li> <ControlledCarousel Pics={this.props.contentData.Pics}/>
+				<li> <UncontrolledCarousel Pics={this.props.contentData.Pics}/>
         </li>
 				<li> {this.props.contentData.PostedDate} </li>
 				<li> {this.props.contentData.Availability} </li>

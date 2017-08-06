@@ -4,12 +4,13 @@ import {Carousel} from 'react-bootstrap';
 import NoImageIcon from './NoImageIcon.jpeg';
 // import Hamster from './Hamster.jpg';
 import ControlledCarousel from '../Tech/ControlledCarousel';
+import * as firebase from 'firebase';
 
 class Detail extends Component{
   constructor(props){
     super(props);
     this.state={
-      image: 'haw'
+      Pics: ''
     }
 
     this.changePic = this.changePic.bind(this);
@@ -19,12 +20,36 @@ class Detail extends Component{
     this.setState({image: NoImageIcon});
   }
 
+  componentDidMount(){
+    const BuyOrSell = 'Buy/';
+    const itemKey = window.location.pathname.split('/Detail/'+BuyOrSell)[1];
+    console.log(itemKey);
+    const itemRef = firebase.database().ref().child('Buy').child(itemKey);
+    // console.log(itemRef);
+
+    itemRef.on("value", (snap) => {
+      console.log(snap.val().Title);
+      // snap.forEach((data) => {
+      //   console.log(data.val());
+      // })
+      this.setState({
+        Title:snap.val().Title,
+        Pics:snap.val().Pics,
+        PostedDate:snap.val().PostedDate,
+        Price: snap.val().Price,
+        Availability:snap.val().Availability,
+        Buy:snap.val().Buy,
+        Key:snap.key
+      })
+    })
+  }
+
   render(){
-    var link = window.location.pathname.split('Detail/');
+    
     return(
       <div>
         <div>
-          {link}
+          <li> <ControlledCarousel Pics={this.state.Pics}/></li>
         </div>
       </div>
     )
