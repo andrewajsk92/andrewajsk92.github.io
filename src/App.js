@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 
-import { Col } from 'react-bootstrap';
+// import { Col } from 'react-bootstrap';
 
 
 import Header from "./Common/Header";
 import Main from "./Common/Main";
-import Sorting from "./Common/Sorting";
 
 
 class App extends Component {
@@ -16,8 +15,7 @@ class App extends Component {
       <div>
       	<Header />
       	<div>
-      		<Col xs={2}> <Sorting /></Col>
-          <Col xs={10}> <Main /> </Col>
+          <Main />
       	</div>
       </div>
     );

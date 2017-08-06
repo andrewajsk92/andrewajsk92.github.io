@@ -6,6 +6,7 @@ import Home from './Home'
 import About from './About'
 import Car from './Car'
 import NewPost from './NewPost'
+import Detail from './Detail'
 
 
 
@@ -29,22 +30,24 @@ import NewPost from './NewPost'
 class Main extends Component{
     
 
-	render(){
+  render(){
         
-        return(
-            <div>
-                <main>
-                    <Switch>
-                        <Route exact path='/' component={Home}/>
-                        <Route path='/car' component={Car}/>
-                        <Route path='/About' component={About}/>
-                        <Route path='/NewPost' component={NewPost}/>
-                    </Switch>
-                </main>
+    return(
+      <div>
+        <main>
+          <Switch>
+            <Route exact path='/' component={Home}/>
+            <Route path='/car' component={Car}/>
+            <Route path='/About' component={About}/>
+            <Route path='/NewPost' component={NewPost}/>
+            <Route path='/Detail' component={Detail}/>
 
-            </div>
-        );
-    }
+          </Switch>
+        </main>
+
+      </div>
+    );
+  }
 }
 
 export default Main

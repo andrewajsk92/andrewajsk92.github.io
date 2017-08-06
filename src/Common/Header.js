@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import '../App.css';
 
-import { Navbar, FormGroup, FormControl, Button, ButtonGroup, Col,Grid, Row } from 'react-bootstrap';
 // import {ToggleButtonGroup, ToggleButton} from 'react-toggle-button';
 
 const App = () => (
@@ -21,31 +20,8 @@ const App = () => (
 		    </div>
 		</nav>
 
-		<div>
-			<Navbar>
-				<Navbar.Form pullLeft>
-			    	<FormGroup>
-			    		<FormControl type="text" placeholder="Search" />
-			    	</FormGroup>
-			    	{' '}
-			    	<Button type="submit">Search</Button>
-			  	</Navbar.Form>
-			</Navbar>
 
-		</div>
-
-		<Grid>
-			<Row>
-				<Col xs={1} md={4}></Col>
-				<Col xs={4} md={4}>
-					<ButtonGroup type="radio" name="options" defaultValue={1} className="BuySellButton">
-					    <Button value={1} className="Testing"> Buy </Button>
-						<Button value={2}>Sell</Button>
-					</ButtonGroup>
-				</Col>
-				<Col xs={1} md={4}></Col>
-			</Row>
-		</Grid>
+		
 
 		
 
@@ -53,4 +29,4 @@ const App = () => (
 	</div>
 )
 
-export default App
+export default App;
