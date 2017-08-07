@@ -1,7 +1,18 @@
-import React from 'react'
+import React, {Component} from 'react';
+
+import * as firebase from 'firebase';
 
 
-var FilteredList = React.createClass({
+class FilteredList extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      items: [],
+      initialItems: []
+    }
+    this.filterList = this.filterList.bind(this);
+  }
+
   filterList(event){
     var updatedList = this.state.initialItems;
     updatedList = updatedList.filter(function(item){
@@ -9,50 +20,58 @@ var FilteredList = React.createClass({
         event.target.value.toLowerCase()) !== -1;
     });
     this.setState({items: updatedList});
-  },
-  getInitialState(){
-     return {
-       initialItems: [
-         "Apples",
-         "Broccoli",
-         "Chicken",
-         "Bacon",
-         "Eggs",
-         "Salmon",
-         "Granola",
-         "Bananas",
-         "Beer",
-         "Wine",
-         "Yogurt"
-       ],
-       items: []
-     }
-  },
-  componentWillMount(){
-    this.setState({items: this.state.initialItems})
-  },
+  }
+  
+  componentDidMount(){
+    const rootRef = firebase.database().ref().child('Buy');
+    rootRef.on("value", snap => {
+      var items = [];
+
+      snap.forEach((data) => {
+        var item = [ data.val().Title]
+        // var item = {
+        //   Title: data.val().Title,
+        //   Pics: data.val().Pics,
+        //   PostedDate: data.val().PostedDate,
+        //   Price: data.val().Price,
+        //   Availability: data.val().Availability,
+        //   Buy: data.val().Buy,
+        //   Key: data.key
+        // }
+        items.push(item);
+        this.setState({initialItems: items});
+        // console.log(data.val());
+      })
+    })
+  }
+
   render(){
+    console.log(this.state.initialItems);
     return (
       <div className="filter-list">
-        <input type="text" placeholder="Search" onChange={this.filterList}/>
-      <List items={this.state.items}/>
+        <form>
+          <fieldset className="form-group">
+          <input type="text" className="form-control form-control-lg" placeholder="Search" onChange={this.filterList}/>
+        </fieldset>
+        </form>
+        <List items={this.state.items}/>
       </div>
     );
   }
-});
+};
 
-var List = React.createClass({
+class List extends Component{
   render(){
     return (
       <ul>
       {
-        this.props.items.map(function(item) {
-          return <li key={item}>{item}</li>
+        this.props.items.map((item, i) => {
+          <li key={i}>{item.Title}</li>
         })
        }
       </ul>
     )  
   }
-});
+};
 
 export default FilteredList;

@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
 
 import {Carousel} from 'react-bootstrap';
-import NoImageIcon from './NoImageIcon.jpeg';
 // import Hamster from './Hamster.jpg';
+import {ButtonToolbar, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
 import ControlledCarousel from '../Tech/ControlledCarousel';
 import * as firebase from 'firebase';
+import NoImageIcon from './NoImageIcon.jpeg';
+
 
 class Detail extends Component{
   constructor(props){
@@ -49,7 +53,33 @@ class Detail extends Component{
     return(
       <div>
         <div>
-          <li> <ControlledCarousel Pics={this.state.Pics}/></li>
+          <ButtonToolbar>
+            <Link to="/NewPost" ><Button bsStyle="primary">Edit</Button></Link>
+          </ButtonToolbar>
+        </div>
+
+        <div>
+          {this.state.Title}
+        </div>
+
+        <div>
+          {this.state.PostedDate}
+        </div>
+
+        <div>
+          {this.state.Price}
+        </div>
+
+        <div>
+          {this.state.Availability ? "good to go": "fuckk off"}
+        </div>
+
+        <div>
+          {this.state.Buy ? "buying" : "selling"}
+        </div>
+
+        <div>
+          <ControlledCarousel Pics={this.state.Pics}/>
         </div>
       </div>
     )

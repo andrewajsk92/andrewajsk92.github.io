@@ -33,7 +33,8 @@ class Home extends Component {
   }
 
   componentDidMount(){
-    const rootRef = firebase.database().ref().child('Buy');
+    const BuyOrSell = 'Buy';
+    const rootRef = firebase.database().ref().child(BuyOrSell);
     rootRef.on("value", snap => {
     	var items = [];
 

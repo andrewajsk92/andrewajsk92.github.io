@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import {Carousel} from 'react-bootstrap';
 
-// import NoImageIcon from '../Common/NoImageIcon.jpeg';
+import NoImageIcon from '../Common/NoImageIcon.jpeg';
 // import Hamster from '../Common/Hamster.jpg';
 
 class ControlledCarousel extends Component{
@@ -32,13 +32,21 @@ class ControlledCarousel extends Component{
 
   render() {
     return (
-      <Carousel activeIndex={this.state.index} direction={this.state.direction} onSelect={(selectedIndex, e)=>this.setState({index: selectedIndex, direction: e.direction})}>
-        {Object.values(this.props.Pics).map((pic,i) => 
-          <Carousel.Item key={i}>
-            <img width={500} height alt="NOT FOUND" src={pic}/>
-          </Carousel.Item>
-        )}
-      </Carousel>
+      <div>
+        {this.props.Pics !== undefined ? (
+          <Carousel activeIndex={this.state.index} direction={this.state.direction} onSelect={(selectedIndex, e)=>this.setState({index: selectedIndex, direction: e.direction})}>
+            {Object.values(this.props.Pics).map((pic,i) => 
+              <Carousel.Item key={i}>
+                <img width={500} height alt="NOT FOUND" src={pic}/>
+              </Carousel.Item>
+            )}
+          </Carousel>
+          ) : (
+            <img src={NoImageIcon} />
+
+          )
+        }
+      </div>
     );
   }
 }
