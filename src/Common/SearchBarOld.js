@@ -31,9 +31,9 @@ var FilteredList = React.createClass({
     return (
       <div className="filter-list">
         <form>
-        <fieldset className="form-group">
-        <input type="text" className="form-control form-control-lg" placeholder="Search" onChange={this.filterList}/>
-        </fieldset>
+          <fieldset className="form-group">
+            <input type="text" className="form-control form-control-lg" placeholder="Search" onChange={this.filterList}/>
+          </fieldset>
         </form>
       <List items={this.state.items}/>
       </div>

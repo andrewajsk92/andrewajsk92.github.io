@@ -37,12 +37,12 @@ class ControlledCarousel extends Component{
           <Carousel activeIndex={this.state.index} direction={this.state.direction} onSelect={(selectedIndex, e)=>this.setState({index: selectedIndex, direction: e.direction})}>
             {Object.values(this.props.Pics).map((pic,i) => 
               <Carousel.Item key={i}>
-                <img width={500} height alt="NOT FOUND" src={pic}/>
+                <img width={500} height={300} alt="NOT FOUND" src={pic}/>
               </Carousel.Item>
             )}
           </Carousel>
           ) : (
-            <img src={NoImageIcon} />
+            <img src={NoImageIcon} width={500} height={300}/>
 
           )
         }

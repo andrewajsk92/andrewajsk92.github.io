@@ -20,12 +20,12 @@ class UncontrolledCarousel extends Component{
           <Carousel>
             {Object.values(this.props.Pics).map((pic,i) => 
               <Carousel.Item key={i}>
-                <img width={500} height alt="NOT FOUND" src={pic}/>
+                <img width={500} height={300} alt="NOT FOUND" src={pic}/>
               </Carousel.Item>
             )}
           </Carousel>
           ) : (
-          <img src={NoImageIcon} />
+          <img src={NoImageIcon} width={500} height={300}/>
           )
         }
       </div>
