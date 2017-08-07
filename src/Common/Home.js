@@ -24,8 +24,8 @@ firebase.initializeApp(config);
 
 
 class Home extends Component {
-	constructor(){
-    super();
+	constructor(props){
+    super(props);
     this.state = {
     	items: []
     }
@@ -77,7 +77,7 @@ class Home extends Component {
           </ButtonToolbar>
 
           <div>
-            <SearchBar />
+            <SearchBar items={this.state.items} />
           </div>
 
           <Grid>
@@ -85,7 +85,7 @@ class Home extends Component {
               <Col xs={1} md={4}></Col>
               <Col xs={4} md={4}>
                 <ButtonGroup type="radio" name="options" defaultValue={1} className="BuySellButton">
-                    <Button value={1} className="Testing"> Buy </Button>
+                  <Button value={1} className="Testing"> Buy </Button>
                   <Button value={2}>Sell</Button>
                 </ButtonGroup>
               </Col>
