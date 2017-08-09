@@ -25,7 +25,7 @@ class UncontrolledCarousel extends Component{
             )}
           </Carousel>
           ) : (
-          <img src={NoImageIcon} width={500} height={300}/>
+          <img src={NoImageIcon} alt="NOT FOUND" width={500} height={300}/>
           )
         }
       </div>

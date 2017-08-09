@@ -81,6 +81,10 @@ class Detail extends Component{
         <div>
           <ControlledCarousel Pics={this.state.Pics}/>
         </div>
+
+        <div>
+          <Link to="/"> Go Back </Link>
+        </div>
       </div>
     )
   }

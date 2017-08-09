@@ -27,15 +27,19 @@ class Home extends Component {
 	constructor(props){
     super(props);
     this.state = {
-    	items: []
+    	BuyItems: [],
+      SellItems: [],
+      BuyOrSell: 'Buy'
     }
-
+    this.handleBuyOrSell = this.handleBuyOrSell.bind(this);
   }
 
   componentDidMount(){
-    const BuyOrSell = 'Buy';
-    const rootRef = firebase.database().ref().child(BuyOrSell);
-    rootRef.on("value", snap => {
+    // const BuyOrSell = 'Buy';
+    const buyRef = firebase.database().ref().child('Buy');
+    const sellRef = firebase.database().ref().child('Sell');
+
+    buyRef.on("value", snap => {
     	var items = [];
 
     	snap.forEach((data) => {
@@ -49,9 +53,28 @@ class Home extends Component {
           Key: data.key
     		}
     		items.push(item);
-    		this.setState({items: items});
+    		this.setState({BuyItems: items});
         // console.log(data.val());
     	})
+    })
+
+    sellRef.on("value", snap => {
+      var items = [];
+
+      snap.forEach((data) => {
+        var item = {
+          Title: data.val().Title,
+          Pics: data.val().Pics,
+          PostedDate: data.val().PostedDate,
+          Price: data.val().Price,
+          Availability: data.val().Availability,
+          Buy: data.val().Buy,
+          Key: data.key
+        }
+        items.push(item);
+        this.setState({SellItems: items});
+        // console.log(data.val());
+      })
     })
   }
 
@@ -61,8 +84,14 @@ class Home extends Component {
   //   })
   // }
 
-  render(){
+  handleBuyOrSell(e){
+    this.setState({
+      BuyOrSell: e.target.value
+    })
+  }
 
+  render(){
+    console.log(this.state.SellItems);
     return (
     	<div>
         <Col xs={2}> 
@@ -76,53 +105,73 @@ class Home extends Component {
             <Link to="/NewPost" ><Button bsStyle="primary">New Post</Button></Link>
           </ButtonToolbar>
 
-          <div>
-            <SearchBar items={this.state.items} />
-          </div>
-
           <Grid>
             <Row>
-              <Col xs={1} md={4}></Col>
+              <Col xs={4} md={4}></Col>
               <Col xs={4} md={4}>
-                <ButtonGroup type="radio" name="options" defaultValue={1} className="BuySellButton">
-                  <Button value={1} className="Testing"> Buy </Button>
-                  <Button value={2}>Sell</Button>
-                </ButtonGroup>
+                <form>
+                  <label> <input type="radio" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onClick={this.handleBuyOrSell}/> Buy </label>
+                  <label> <input type="radio" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onClick={this.handleBuyOrSell}/> Sell </label>
+                </form>
+                {this.state.BuyOrSell}
+
               </Col>
-              <Col xs={1} md={4}></Col>
+              <Col xs={4} md={4}></Col>
             </Row>
           </Grid>
 
-		
-      		HUH??
-          {this.state.items.map((content, i) => 
-      		  <Content key = {i} contentData = {content} />
-          )}
+          <div>
+            {this.state.BuyOrSell === 'Buy' ? (
+              <SearchBar items={this.state.BuyItems} />
+            ) : (
+              <SearchBar items={this.state.SellItems} />
+            )
+            }
+          </div>
+     
         </Col>
     	</div>
     );
   }
 }
 
-class Content extends Component{
-	render(){
-    var BuyOrSell = "Buy";
+export default Home;
 
-		return (
-			<ul>
-				<li> <Link to={"Detail/" + BuyOrSell + "/" +this.props.contentData.Key} > {this.props.contentData.Title} </Link></li>
-				<li> {this.props.contentData.Price}</li>
-				<li> <UncontrolledCarousel Pics={this.props.contentData.Pics}/>
-        </li>
-				<li> {this.props.contentData.PostedDate} </li>
-				<li> {this.props.contentData.Availability} </li>
-        <li> {this.props.contentData.Key} </li>
-			</ul>
-		)
-	}
-}
 
-export default Home
+
+// <ButtonGroup type="radio" name="options" defaultValue={1} className="BuySellButton">
+//                   <Button value={1} className="Testing"> Buy </Button>
+//                   <Button value={2}>Sell</Button>
+//                 </ButtonGroup>
+
+
+
+
+
+// HUH??
+
+// {this.state.items.map((content, i) => 
+//             <Content key = {i} contentData = {content} />
+//           )}
+
+// class Content extends Component{
+// 	render(){
+//     var BuyOrSell = "Buy";
+
+// 		return (
+// 			<ul>
+// 				<li> <Link to={"Detail/" + BuyOrSell + "/" +this.props.contentData.Key} > {this.props.contentData.Title} </Link></li>
+// 				<li> {this.props.contentData.Price}</li>
+// 				<li> <UncontrolledCarousel Pics={this.props.contentData.Pics}/>
+//         </li>
+// 				<li> {this.props.contentData.PostedDate} </li>
+// 				<li> {this.props.contentData.Availability} </li>
+//         <li> {this.props.contentData.Key} </li>
+// 			</ul>
+// 		)
+// 	}
+// }
+
 
 
 // <Content key = {i} contentData = {content} />

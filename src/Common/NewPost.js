@@ -11,11 +11,13 @@ class NewPost extends Component{
     this.state = {
       Title: '',
       Price: '',
-      Pics: []
+      Pics: [],
+      BuyOrSell: 'Buy'
     }
     this.handleChangeTitle = this.handleChangeTitle.bind(this);
     this.handleChangePrice = this.handleChangePrice.bind(this);
     this.handleChangeImage = this.handleChangeImage.bind(this);
+    this.handleBuyOrSell = this.handleBuyOrSell.bind(this);
 
     this.addPost = this.addPost.bind(this);
 
@@ -24,7 +26,7 @@ class NewPost extends Component{
 
   addPost (e){
     e.preventDefault();
-    const rootRef = firebase.database().ref().child('Buy');
+    const rootRef = firebase.database().ref().child(this.state.BuyOrSell);
 
     var item = {
       Title: this.state.Title,
@@ -130,6 +132,12 @@ class NewPost extends Component{
     }
   }
 
+  handleBuyOrSell(e){
+    this.setState({
+      BuyOrSell: e.target.value
+    })
+  }
+
   cancel(){
     console.log("HMM");
   }
@@ -143,6 +151,7 @@ class NewPost extends Component{
       $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
     }
 
+    console.log(this.state.BuyOrSell);
     return(
       <div>
         <form onSubmit={this.addPost}>
@@ -155,6 +164,13 @@ class NewPost extends Component{
             <div>
               <label><b>Desirable Price*</b></label>
               <input type="text" pattern="[0-9]*" placeholder="Enter Password" id="price" name="password" value={this.state.Price} onChange={this.handleChangePrice} required/>
+            </div>
+
+            <div>
+              <form>
+                <label> <input type="radio" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onClick={this.handleBuyOrSell}/> Buy </label>
+                <label> <input type="radio" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onClick={this.handleBuyOrSell}/> Sell </label>
+              </form>
             </div>
 
             <div>
