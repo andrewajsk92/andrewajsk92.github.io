@@ -168,8 +168,8 @@ class NewPost extends Component{
 
             <div>
               <form>
-                <label> <input type="radio" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onClick={this.handleBuyOrSell}/> Buy </label>
-                <label> <input type="radio" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onClick={this.handleBuyOrSell}/> Sell </label>
+                <label> <input type="radio" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/> Buy </label>
+                <label> <input type="radio" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> Sell </label>
               </form>
             </div>
 

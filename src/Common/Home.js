@@ -110,8 +110,8 @@ class Home extends Component {
               <Col xs={4} md={4}></Col>
               <Col xs={4} md={4}>
                 <form>
-                  <label> <input type="radio" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onClick={this.handleBuyOrSell}/> Buy </label>
-                  <label> <input type="radio" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onClick={this.handleBuyOrSell}/> Sell </label>
+                  <label> <input type="radio" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/> Buy </label>
+                  <label> <input type="radio" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> Sell </label>
                 </form>
                 {this.state.BuyOrSell}
 
