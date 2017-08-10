@@ -27,7 +27,7 @@ class SearchBar extends Component{
   }
 
   componentWillReceiveProps(){
-    console.log(this.props.items);
+    // console.log(this.props.items);
     this.setState({
       items: this.props.items
     })

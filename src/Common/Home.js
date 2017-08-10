@@ -29,9 +29,14 @@ class Home extends Component {
     this.state = {
     	BuyItems: [],
       SellItems: [],
-      BuyOrSell: 'Buy'
+
+      BuyOrSell: 'Buy',
+      SortPrice: 'Increasing',
+      Recent: 'MostRecent'
     }
     this.handleBuyOrSell = this.handleBuyOrSell.bind(this);
+    this.handleSortPrice = this.handleSortPrice.bind(this);
+    this.handleRecent = this.handleRecent.bind(this);
   }
 
   componentDidMount(){
@@ -90,14 +95,65 @@ class Home extends Component {
     })
   }
 
+  handleSortPrice(e){
+    this.setState({
+      SortPrice: e.target.value,
+      BuyItems: this.state.BuyItems.sort((a, b) => {
+        if(e.target.value === 'Increasing'){ 
+          return a.Price - b.Price;
+        } else {
+          return b.Price - a.Price;
+        }
+      }),
+
+      SellItems: this.state.SellItems.sort((a, b) => {
+        if(e.target.value === 'Increasing'){ 
+          return a.Price - b.Price;
+        } else {
+          return b.Price - a.Price;
+        }
+      })
+    })
+  }
+
+  handleRecent(e){
+    this.setState({
+      Recent: e.target.value,
+      BuyItems: this.state.BuyItems.sort((a, b) => {
+        if(e.target.value === 'MostRecent'){ 
+          return a.PostedDate - b.PostedDate;
+        } else {
+          return b.PostedDate - a.PostedDate;
+        }
+      }),
+      SellItems: this.state.SellItems.sort((a, b) => {
+        if(e.target.value === 'MostRecent '){ 
+          return a.PostedDate - b.PostedDate;
+        } else {
+          return b.PostedDate - a.PostedDate;
+        }
+      })
+    })
+  }
+
   render(){
-    console.log(this.state.SellItems);
+    console.log(this.state.BuyItems);
     return (
     	<div>
         <Col xs={2}> 
-          <h2>
-            THIS IS SORTING
-          </h2>
+          <div>
+            <form>
+              <label> <input type="radio" value="Increasing" checked={this.state.SortPrice ==='Increasing'}  onChange={this.handleSortPrice}/> Increasing </label>
+              <label> <input type="radio" value="Decreasing" checked={this.state.SortPrice === 'Decreasing'} onChange={this.handleSortPrice}/> Decreasing </label>
+            </form>
+          </div>
+
+          <div>
+            <form>
+              <label> <input type="radio" value="MostRecent" checked={this.state.Recent ==='MostRecent'}  onChange={this.handleRecent}/> Most Recent </label>
+              <label> <input type="radio" value="LeastRecent" checked={this.state.Recent === 'LeastRecent'} onChange={this.handleRecent}/> Least Recent </label>
+            </form>
+          </div>
         </Col>
 
         <Col xs={10}>
