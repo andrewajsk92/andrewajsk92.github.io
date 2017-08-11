@@ -11,7 +11,7 @@ class SearchBar extends Component{
   constructor(props){
     super(props);
     this.state = {
-      items: this.props.items
+      items: []
     }
 
     this.filterList = this.filterList.bind(this);
@@ -26,16 +26,19 @@ class SearchBar extends Component{
     this.setState({items: updatedList});
   }
 
-  componentWillReceiveProps(){
+  componentWillReceiveProps(nextProps){
+    // console.log("PROPS CHANGED WTF MAN");
+    // console.log(nextProps);
     // console.log(this.props.items);
     this.setState({
-      items: this.props.items
+      items: nextProps.items
     })
   }
 
 
   render(){
-
+    // console.log(this.props.items);
+    // console.log(this.state.items);
     return (
       <div className="filter-list">
         <form>

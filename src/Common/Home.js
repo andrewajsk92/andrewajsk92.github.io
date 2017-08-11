@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
-import {ButtonToolbar, Button, ButtonGroup, Col,Grid, Row } from 'react-bootstrap';
+// import {ButtonToolbar, Button, ButtonGroup, Col,Grid, Row } from 'react-bootstrap';
+
+import {Button, Icon, Col, Row} from 'react-materialize';
+
 import { Link } from 'react-router-dom';
 
 import SearchBar from './SearchBar.js';
@@ -83,12 +86,6 @@ class Home extends Component {
     })
   }
 
-  // onError(e){
-  //   this.setState({
-  //     Pics: "./NoImageIcon.jpeg"
-  //   })
-  // }
-
   handleBuyOrSell(e){
     this.setState({
       BuyOrSell: e.target.value
@@ -120,27 +117,30 @@ class Home extends Component {
     this.setState({
       Recent: e.target.value,
       BuyItems: this.state.BuyItems.sort((a, b) => {
-        if(e.target.value === 'MostRecent'){ 
-          return a.PostedDate - b.PostedDate;
+        if(e.target.value === 'MostRecent'){
+          console.log("MOST");
+          return a.PostedDate < b.PostedDate;
         } else {
-          return b.PostedDate - a.PostedDate;
+          console.log("LEAST");
+          return b.PostedDate >= a.PostedDate;
         }
       }),
       SellItems: this.state.SellItems.sort((a, b) => {
         if(e.target.value === 'MostRecent '){ 
-          return a.PostedDate - b.PostedDate;
+          return a.PostedDate < b.PostedDate;
         } else {
-          return b.PostedDate - a.PostedDate;
+          return b.PostedDate >= a.PostedDate;
         }
       })
     })
   }
 
   render(){
-    console.log(this.state.BuyItems);
+    // console.log(this.state.BuyItems);
+    // console.log(this.state.SellItems);
     return (
     	<div>
-        <Col xs={2}> 
+        <Col s={2}> 
           <div>
             <form>
               <label> <input type="radio" value="Increasing" checked={this.state.SortPrice ==='Increasing'}  onChange={this.handleSortPrice}/> Increasing </label>
@@ -156,31 +156,35 @@ class Home extends Component {
           </div>
         </Col>
 
-        <Col xs={10}>
-        	<ButtonToolbar>
+        <Col s={10}>
+          <Button>
             <Link to="/NewPost" ><Button bsStyle="primary">New Post</Button></Link>
-          </ButtonToolbar>
+          </Button>
 
-          <Grid>
-            <Row>
-              <Col xs={4} md={4}></Col>
-              <Col xs={4} md={4}>
-                <form>
-                  <label> <input type="radio" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/> Buy </label>
-                  <label> <input type="radio" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> Sell </label>
-                </form>
-                {this.state.BuyOrSell}
+          <Row>
+            <Col s={4} md={4}></Col>
+            <Col s={4} md={4}>
+              <form>
+                <label> <input type="radio" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/> Buy </label>
+                <label> <input type="radio" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> Sell </label>
+              </form>
+              {this.state.BuyOrSell}
 
-              </Col>
-              <Col xs={4} md={4}></Col>
-            </Row>
-          </Grid>
+            </Col>
+            <Col s={4} md={4}></Col>
+          </Row>
 
           <div>
             {this.state.BuyOrSell === 'Buy' ? (
+              <div>
+              <h3> HIHIHI </h3>
               <SearchBar items={this.state.BuyItems} />
+              </div>
             ) : (
+              <div>
+              <h4> BYEBYE </h4>
               <SearchBar items={this.state.SellItems} />
+              </div>
             )
             }
           </div>
@@ -192,6 +196,10 @@ class Home extends Component {
 }
 
 export default Home;
+
+
+
+
 
 
 

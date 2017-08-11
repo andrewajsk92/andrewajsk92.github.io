@@ -30,7 +30,7 @@ class NewPost extends Component{
 
     var item = {
       Title: this.state.Title,
-      PostedDate: new Date().toString(),
+      PostedDate: new Date().toDateString(),
       Price: this.state.Price,
       Availability: true,
       Buy: true,
