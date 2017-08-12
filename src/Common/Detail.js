@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
-import {Carousel} from 'react-bootstrap';
+// import {Carousel} from 'react-bootstrap';
+import {Carousel} from 'react-materialize';
 // import Hamster from './Hamster.jpg';
 import {ButtonToolbar, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -8,6 +9,7 @@ import { Link } from 'react-router-dom';
 import ControlledCarousel from '../Tech/ControlledCarousel';
 import * as firebase from 'firebase';
 import NoImageIcon from './NoImageIcon.jpeg';
+import Hamster from './Hamster.jpg';
 
 
 class Detail extends Component{
@@ -49,7 +51,8 @@ class Detail extends Component{
   }
 
   render(){
-    
+    // console.log(this.state.Pics);
+    // console.log(Object.values(this.state.Pics));
     return(
       <div>
         <div>
@@ -91,6 +94,18 @@ class Detail extends Component{
 }
 
 export default Detail;
+
+// {this.state.Pics !== undefined ? 
+//             (
+//               <Carousel images={Object.values(this.state.Pics)} />
+//             ) : (
+//               <img src={NoImageIcon} width={500} height={300}/>
+//             )
+//           }
+
+
+// <ControlledCarousel Pics={this.state.Pics}/>
+
 
  // <img src='asdf' alt='nope' onError={console.log("WTF")} />
         // <div>

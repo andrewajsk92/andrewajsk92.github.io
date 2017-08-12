@@ -63,43 +63,6 @@ class NewPost extends Component{
     } else{
 
     }
-
-    // const pic = this.state.Pics;
-    // if(this.state.Pics != []){
-
-    //   const storageRef = firebase.storage().ref('Images/' + pic.name);
-    //   const uploadTask = storageRef.put(pic);
-
-    //   uploadTask.on("state_changed", (snapshot) => {
-
-    //   }, (error) => {
-    //     //Errors
-    //   }, () => {
-    //     //Handle successful uploads
-    //     var pics = uploadTask.snapshot.downloadURL;
-    //     var item = {
-    //       Title: this.state.Title,
-    //       PostedDate: new Date().toString(),
-    //       Price: this.state.Price,
-    //       Availability: true,
-    //       Pics: pics
-    //     }
-    //     rootRef.push(item);
-    //     console.log(pics);
-    //   });
-    //   console.log("PUSHED WTF YES PIC");
-    //   console.log(item);
-    // } else{
-    //   var item = {
-    //     Title: this.state.Title,
-    //     PostedDate: new Date().toString(),
-    //     Price: this.state.Price,
-    //     Availability: true,
-    //     Pics: this.state.Pics
-    //   }
-    //   rootRef.push(item);
-    //   console.log("PUSHED WTF NO PIC");
-    // }
   }
 
   handleChangeTitle(event){
@@ -167,10 +130,8 @@ class NewPost extends Component{
             </div>
 
             <div>
-              <form>
-                <label> <input type="radio" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/> Buy </label>
-                <label> <input type="radio" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> Sell </label>
-              </form>
+              <label> <input type="radio" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/> Buy </label>
+              <label> <input type="radio" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> Sell </label>
             </div>
 
             <div>

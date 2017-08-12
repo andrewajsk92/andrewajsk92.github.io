@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 
 import Home from './Home'
@@ -7,6 +7,12 @@ import About from './About'
 import Car from './Car'
 import NewPost from './NewPost'
 import Detail from './Detail'
+import SignIn from './SignIn'
+import SignUp from './SignUp'
+import SignOut from './SignOut'
+
+import * as firebase from 'firebase';
+
 
 
 
@@ -28,6 +34,21 @@ import Detail from './Detail'
 
 
 class Main extends Component{
+  constructor(props){
+    super(props);
+
+  }
+
+  // requireAuth(nextState, replace, next){
+  //   console.log("REQUIRING AUTH");
+  //   if(!firebase.auth().currentUser){
+  //     replace({
+  //       pathname: '/SignIn'
+  //     })
+  //     next();
+  //   }
+  //   next();
+  // }
     
 
   render(){
@@ -42,6 +63,37 @@ class Main extends Component{
             <Route path='/NewPost' component={NewPost}/>
             <Route path='/Detail' component={Detail}/>
 
+            <Route path='/SignIn' render={() => 
+              (
+                firebase.auth().currentUser === null ?
+                (
+                  <SignIn />
+                ) : (
+                  <Redirect to ="/" />
+                )
+              )
+            }/>
+
+            <Route path='/SignUp' render={() => 
+              (
+                firebase.auth().currentUser === null ?
+                (
+                  <SignUp />
+                ) : (
+                  <Redirect to ="/" />
+                )
+              )
+            }/>
+
+            <Route path='/SignOut' render={() => 
+              (
+                firebase.auth().currentUser === null ? 
+                (
+                  <Redirect to="/" />
+                ) : (
+                  <SignOut />
+                )
+              )}/>
           </Switch>
         </main>
 

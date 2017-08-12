@@ -14,17 +14,9 @@ import UncontrolledCarousel from '../Tech/UncontrolledCarousel';
 
 
 
-var config = {
-  apiKey: "AIzaSyBuY9y2xC_54QCn-R42fe7z1yTAoM-eJNk",
-  authDomain: "buyandsell-449e9.firebaseapp.com",
-  databaseURL: "https://buyandsell-449e9.firebaseio.com",
-  projectId: "buyandsell-449e9",
-  storageBucket: "buyandsell-449e9.appspot.com",
-  messagingSenderId: "993095145852"
-};
-firebase.initializeApp(config);
 
 
+const user = firebase.auth().currentUser;
 
 class Home extends Component {
 	constructor(props){
@@ -138,6 +130,7 @@ class Home extends Component {
   render(){
     // console.log(this.state.BuyItems);
     // console.log(this.state.SellItems);
+    console.log(firebase.auth().currentUser);
     return (
     	<div>
         <Col s={2}> 
@@ -157,13 +150,11 @@ class Home extends Component {
         </Col>
 
         <Col s={10}>
-          <Button>
-            <Link to="/NewPost" ><Button bsStyle="primary">New Post</Button></Link>
-          </Button>
+          <Link to="/NewPost" ><Button>New Post</Button></Link>
 
           <Row>
-            <Col s={4} md={4}></Col>
-            <Col s={4} md={4}>
+            <Col s={4} m={4}></Col>
+            <Col s={4} m={4}>
               <form>
                 <label> <input type="radio" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/> Buy </label>
                 <label> <input type="radio" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> Sell </label>
@@ -171,7 +162,7 @@ class Home extends Component {
               {this.state.BuyOrSell}
 
             </Col>
-            <Col s={4} md={4}></Col>
+            <Col s={4} m={4}></Col>
           </Row>
 
           <div>
