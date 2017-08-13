@@ -130,7 +130,7 @@ class Home extends Component {
   render(){
     // console.log(this.state.BuyItems);
     // console.log(this.state.SellItems);
-    console.log(firebase.auth().currentUser);
+    // console.log(firebase.auth().currentUser);
     return (
     	<div>
         <Col s={2}> 
@@ -150,7 +150,7 @@ class Home extends Component {
         </Col>
 
         <Col s={10}>
-          <Link to="/NewPost" ><Button>New Post</Button></Link>
+          {firebase.auth().currentUser !== null ? (<Link to="/NewPost" ><Button>New Post</Button></Link>) : ('')}
 
           <Row>
             <Col s={4} m={4}></Col>
@@ -169,12 +169,12 @@ class Home extends Component {
             {this.state.BuyOrSell === 'Buy' ? (
               <div>
               <h3> HIHIHI </h3>
-              <SearchBar items={this.state.BuyItems} />
+              <SearchBar items={this.state.BuyItems} BuyOrSell={this.state.BuyOrSell}/>
               </div>
             ) : (
               <div>
               <h4> BYEBYE </h4>
-              <SearchBar items={this.state.SellItems} />
+              <SearchBar items={this.state.SellItems} BuyOrSell={this.state.BuyOrSell}/>
               </div>
             )
             }

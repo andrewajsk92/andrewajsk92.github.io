@@ -11,7 +11,8 @@ class SearchBar extends Component{
   constructor(props){
     super(props);
     this.state = {
-      items: []
+      items: [],
+      BuyOrSell: 'Buy'
     }
 
     this.filterList = this.filterList.bind(this);
@@ -31,7 +32,8 @@ class SearchBar extends Component{
     // console.log(nextProps);
     // console.log(this.props.items);
     this.setState({
-      items: nextProps.items
+      items: nextProps.items,
+      BuyOrSell: nextProps.BuyOrSell
     })
   }
 
@@ -39,6 +41,8 @@ class SearchBar extends Component{
   render(){
     // console.log(this.props.items);
     // console.log(this.state.items);
+    console.log(this.props.BuyOrSell);
+    console.log(this.state.BuyOrSell);
     return (
       <div className="filter-list">
         <form>
@@ -48,7 +52,7 @@ class SearchBar extends Component{
         </form>
 
         {this.state.items.map((content, i) => 
-          <Content key = {i} contentData = {content} />
+          <Content key = {i} contentData = {content} BuyOrSell={this.state.BuyOrSell}/>
         )}
         
       </div>
@@ -74,11 +78,10 @@ class SearchBar extends Component{
 
 class Content extends Component{
   render(){
-    var BuyOrSell = "Buy";
 
     return (
       <ul className="list-group">
-        <li className="list-group-item" > <Link to={"Detail/" + BuyOrSell + "/" +this.props.contentData.Key} > {this.props.contentData.Title} </Link></li>
+        <li className="list-group-item" > <Link to={"Detail/" + this.props.BuyOrSell + "/" +this.props.contentData.Key} > {this.props.contentData.Title} </Link></li>
         <li className="list-group-item" > ${this.props.contentData.Price}</li>
         <li className="list-group-item" > <UncontrolledCarousel Pics={this.props.contentData.Pics}/> </li>
         <li className="list-group-item" > {this.props.contentData.PostedDate} </li>

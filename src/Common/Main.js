@@ -9,7 +9,6 @@ import NewPost from './NewPost'
 import Detail from './Detail'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
-import SignOut from './SignOut'
 
 import * as firebase from 'firebase';
 
@@ -60,7 +59,18 @@ class Main extends Component{
             <Route exact path='/' component={Home}/>
             <Route path='/car' component={Car}/>
             <Route path='/About' component={About}/>
-            <Route path='/NewPost' component={NewPost}/>
+
+            <Route path='/NewPost' render={() => 
+              (
+                firebase.auth().currentUser === null ?
+                (
+                  <Redirect to="/" />
+                ) : (
+                  <NewPost />
+                )
+              )
+            }/>
+
             <Route path='/Detail' component={Detail}/>
 
             <Route path='/SignIn' render={() => 
@@ -85,15 +95,6 @@ class Main extends Component{
               )
             }/>
 
-            <Route path='/SignOut' render={() => 
-              (
-                firebase.auth().currentUser === null ? 
-                (
-                  <Redirect to="/" />
-                ) : (
-                  <SignOut />
-                )
-              )}/>
           </Switch>
         </main>
 

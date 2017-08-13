@@ -11,12 +11,14 @@ import * as firebase from 'firebase';
 import NoImageIcon from './NoImageIcon.jpeg';
 import Hamster from './Hamster.jpg';
 
-
 class Detail extends Component{
   constructor(props){
     super(props);
     this.state={
-      Pics: ''
+      Pics: '',
+
+      BuyOrSell: 'Buy',
+      ItemKey: ''
     }
 
     this.changePic = this.changePic.bind(this);
@@ -27,10 +29,19 @@ class Detail extends Component{
   }
 
   componentDidMount(){
-    const BuyOrSell = 'Buy/';
-    const itemKey = window.location.pathname.split('/Detail/'+BuyOrSell)[1];
+    const str = window.location.pathname.split('/Detail/');
+    const usefulStr = str[1].split("/");
+    const BuyOrSell = usefulStr[0];
+    const itemKey = usefulStr[1];
+
+    console.log("BuyOrSell = " + BuyOrSell );
+    console.log("itemKey = " + itemKey);
+    this.setState({
+      BuyOrSell: BuyOrSell,
+      ItemKey: itemKey
+    });
     console.log(itemKey);
-    const itemRef = firebase.database().ref().child('Buy').child(itemKey);
+    const itemRef = firebase.database().ref().child(BuyOrSell).child(itemKey);
     // console.log(itemRef);
 
     itemRef.on("value", (snap) => {
@@ -55,6 +66,7 @@ class Detail extends Component{
     // console.log(Object.values(this.state.Pics));
     return(
       <div>
+
         <div>
           <ButtonToolbar>
             <Link to="/NewPost" ><Button bsStyle="primary">Edit</Button></Link>

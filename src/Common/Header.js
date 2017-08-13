@@ -20,15 +20,27 @@ firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     // User is signed in.
     currentUser = user;
-    console.log("USER LOGGED IN");
+    // console.log("USER LOGGED IN");
   } else {
     // No user is signed in.
     currentUser = user;
-    console.log("NOONE LOGGED IN");
+    // console.log("NOONE LOGGED IN");
   }
 });
 
+
+
 class App extends Component{
+  signOut(){
+    firebase.auth().signOut().then(() => {
+      // Sign-out successful.
+      console.log("GOOD MAN");
+    }).catch((error) => {
+      // An error happened.
+      console.log("FAILED WTF");
+    });
+  }
+
   render(){
     return(
 
@@ -39,16 +51,26 @@ class App extends Component{
               <a className="navbar-brand" >Buy and Sell</a>
             </div>
             
+            {currentUser === null ? 
+              (
+                <ul className="nav navbar-nav">
+                  <li><Link to="/">Home</Link></li>
+                  <li><Link to="/car">Cars</Link></li>
+                  <li><Link to="/about">About</Link></li>
+                  <li><Link to="/SignIn"> Log In </Link></li>
+                  <li><Link to="/SignUp"> Sign Up </Link></li>
+                </ul>
 
-            <ul className="nav navbar-nav">
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/car">Cars</Link></li>
-              <li><Link to="/about">About</Link></li>
-              <li><Link to="/SignIn"> Log In </Link></li>
-              <li><Link to="/SignUp"> Sign Up </Link></li>
-              <li><Link to="/SignOut"> Sign Out </Link></li>
-            </ul>
-            
+              ) : (
+                <ul className="nav navbar-nav">
+                  <li><Link to="/">Home</Link></li>
+                  <li><Link to="/car">Cars</Link></li>
+                  <li><Link to="/about">About</Link></li>
+                  <li><Link to="/" onClick={this.signOut}> Sign Out </Link></li>
+                </ul>   
+              )
+            }          
+
             
 
             
@@ -62,23 +84,14 @@ class App extends Component{
 
 export default App;
 
-// {currentUser === null ? 
-//               (
-//                 <ul className="nav navbar-nav">
-//                   <li><Link to="/">Home</Link></li>
-//                   <li><Link to="/car">Cars</Link></li>
-//                   <li><Link to="/about">About</Link></li>
-//                   <li><Link to="/SignIn"> Log In </Link></li>
-//                   <li><Link to="/SignUp"> Sign Up </Link></li>
-//                 </ul>
 
-//               ) : (
-//                 <ul className="nav navbar-nav">
-//                   <li><Link to="/">Home</Link></li>
-//                   <li><Link to="/car">Cars</Link></li>
-//                   <li><Link to="/about">About</Link></li>
-//                   <li><Link to="/SignOut"> Sign Out </Link></li>
-//                 </ul>
-                
-//               )
-//             }          
+            // <ul className="nav navbar-nav">
+            //   <li><Link to="/">Home</Link></li>
+            //   <li><Link to="/car">Cars</Link></li>
+            //   <li><Link to="/about">About</Link></li>
+            //   <li><Link to="/SignIn"> Log In </Link></li>
+            //   <li><Link to="/SignUp"> Sign Up </Link></li>
+            //   <li><Link to="/" onClick={this.signOut}> Sign Out </Link></li>
+            // </ul>
+
+

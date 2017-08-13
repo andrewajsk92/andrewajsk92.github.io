@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 
+import { Link, Redirect } from 'react-router-dom';
+
 import {Button} from 'react-materialize';
 import * as firebase from 'firebase';
 
@@ -9,7 +11,9 @@ class SignUp extends Component{
     this.state = {
       email: '',
       password: '',
-      passwordConfirm: ''
+      passwordConfirm: '',
+
+      redirect: false
     }
 
     this.addUser = this.addUser.bind(this);
@@ -31,10 +35,15 @@ class SignUp extends Component{
         console.log(errorMessage);
       }).then(() => {
         console.log ("ADDED");
+        this.setState({
+          redirect: true
+        });
       });
     } else{
       console.log("PASSWORD MAN");
     }
+
+    
   }
 
   handleChangeEmail(event){
@@ -50,6 +59,9 @@ class SignUp extends Component{
   }
 
   render(){
+    if(this.state.redirect === true){
+      return <Redirect to="/" />
+    }
     return (
       <div>
         <form onSubmit={this.addUser}>
@@ -59,18 +71,18 @@ class SignUp extends Component{
           </div>
 
           <div>
-            <label><b>Password*</b></label>
+            <label><b>Password* (AT LEAST 6 CHARACTERS)</b></label>
             <input type="password" placeholder="Enter Password" value={this.state.password} onChange={this.handleChangePassword} required/>
           </div>
 
           <div>
-            <label><b>Confirm Password*</b></label>
+            <label><b>Confirm Password* (AT LEAST 6 CHARACTERS)</b></label>
             <input type="password" placeholder="Confirm Password" value={this.state.passwordConfirm} onChange={this.handleChangePasswordConfirm} required/>
           </div>
 
           <div>
             <Button type="submit" value="Submit">Sign Up</Button>
-            <Button onClick={this.cancel}>Cancel</Button>
+            <Link to="/"><Button>Cancel</Button> </Link>
           </div>
         </form>
       </div>

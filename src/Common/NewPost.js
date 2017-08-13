@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import {ButtonToolbar, Button} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import * as firebase from 'firebase';
 
 class NewPost extends Component{
@@ -12,7 +12,10 @@ class NewPost extends Component{
       Title: '',
       Price: '',
       Pics: [],
-      BuyOrSell: 'Buy'
+      BuyOrSell: 'Buy',
+      User: '',
+
+      redirect: false
     }
     this.handleChangeTitle = this.handleChangeTitle.bind(this);
     this.handleChangePrice = this.handleChangePrice.bind(this);
@@ -33,7 +36,8 @@ class NewPost extends Component{
       PostedDate: new Date().toDateString(),
       Price: this.state.Price,
       Availability: true,
-      Buy: true,
+      BuyOrSell: this.state.BuyOrSell,
+      User: firebase.auth().currentUser.uid,
       Pics: []
     }
     const newlyAddedItem = rootRef.push(item);
@@ -63,6 +67,9 @@ class NewPost extends Component{
     } else{
 
     }
+    this.setState({
+      redirect: true
+    });
   }
 
   handleChangeTitle(event){
@@ -114,6 +121,10 @@ class NewPost extends Component{
       $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
     }
 
+    if(this.state.redirect === true){
+      return <Redirect to="/" />
+    }
+
     console.log(this.state.BuyOrSell);
     return(
       <div>
@@ -142,7 +153,7 @@ class NewPost extends Component{
             <div>
               <ButtonToolbar>
                 <Button type="submit" value="Submit"  bsStyle="primary">Post</Button>
-                <Button onClick={this.cancel}>Cancel</Button>
+                <Link to="/"> <Button onClick={this.cancel}>Cancel</Button></Link>
               </ButtonToolbar>
             </div>
 

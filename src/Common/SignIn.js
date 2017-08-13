@@ -1,5 +1,9 @@
 import React,{Component} from 'react';
 
+import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+
 import {Button} from 'react-materialize';
 import * as firebase from 'firebase';
 
@@ -9,7 +13,10 @@ class SignIn extends Component{
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+
+      redirect: false
+
     }
     this.signIn = this.signIn.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
@@ -19,7 +26,7 @@ class SignIn extends Component{
   signIn(e){
     e.preventDefault();
 
-    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(function(error) {
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch((error) => {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -28,6 +35,10 @@ class SignIn extends Component{
       console.log(errorMessage);
     }).then(() => {
       console.log("DONE");
+      this.setState({
+        redirect: true
+      });
+
     });
   }
 
@@ -40,6 +51,10 @@ class SignIn extends Component{
   }
 
   render(){
+    if(this.state.redirect === true){
+      return <Redirect to="/" />
+    }
+
     return(
       <div>
 
@@ -56,7 +71,7 @@ class SignIn extends Component{
 
           <div>
             <Button type="submit" value="Submit"> Sign In</Button>
-            <Button onClick={this.cancel}>Cancel</Button>
+            <Link to="/"> <Button>Cancel</Button> </Link>
           </div>
         </form>
       </div>
