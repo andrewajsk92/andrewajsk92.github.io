@@ -14,6 +14,7 @@ class NewPost extends Component{
       Pics: [],
       BuyOrSell: 'Buy',
       User: '',
+      Comment: '',
 
       redirect: false
     }
@@ -37,8 +38,9 @@ class NewPost extends Component{
       Price: this.state.Price,
       Availability: true,
       BuyOrSell: this.state.BuyOrSell,
-      User: firebase.auth().currentUser.uid,
-      Pics: []
+      User: firebase.auth().currentUser.email,
+      Pics: [],
+      Comment: ''
     }
     const newlyAddedItem = rootRef.push(item);
     console.log(newlyAddedItem.key);

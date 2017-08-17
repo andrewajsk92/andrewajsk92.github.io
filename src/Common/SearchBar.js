@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import * as firebase from 'firebase';
+
 import { Link } from 'react-router-dom';
 import UncontrolledCarousel from '../Tech/UncontrolledCarousel';
 
@@ -41,8 +41,8 @@ class SearchBar extends Component{
   render(){
     // console.log(this.props.items);
     // console.log(this.state.items);
-    console.log(this.props.BuyOrSell);
-    console.log(this.state.BuyOrSell);
+    // console.log(this.props.BuyOrSell);
+    // console.log(this.state.BuyOrSell);
     return (
       <div className="filter-list">
         <form>
@@ -87,6 +87,7 @@ class Content extends Component{
         <li className="list-group-item" > {this.props.contentData.PostedDate} </li>
         <li className="list-group-item" > {this.props.contentData.Availability} </li>
         <li className="list-group-item" > {this.props.contentData.Key} </li>
+        <li className="list-group-item" > {this.props.contentData.User} </li>
       </ul>
     )
   }

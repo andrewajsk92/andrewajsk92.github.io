@@ -31,18 +31,22 @@ class ControlledCarousel extends Component{
   // }
 
   render() {
+    // console.log(this.props.Pics);
+    // if(this.props.Pics !== null && this.props.Pics !== undefined){
+    //   console.log(Object.values(this.props.Pics));
+    // }
     return (
       <div>
         {this.props.Pics !== undefined ? (
           <Carousel activeIndex={this.state.index} direction={this.state.direction} onSelect={(selectedIndex, e)=>this.setState({index: selectedIndex, direction: e.direction})}>
-            {Object.values(this.props.Pics).map((pic,i) => 
+            {Object.keys(this.props.Pics).map((pic,i) => 
               <Carousel.Item key={i}>
-                <img width={500} height={300} alt="NOT FOUND" src={pic}/>
+                <img width={500} height={300} alt="NOT FOUND" src={this.props.Pics[pic]}/>
               </Carousel.Item>
             )}
           </Carousel>
           ) : (
-            <img src={NoImageIcon} width={500} height={300}/>
+            <img src={NoImageIcon} alt="NOT FOUND" width={500} height={300}/>
 
           )
         }

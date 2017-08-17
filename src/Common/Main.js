@@ -9,6 +9,7 @@ import NewPost from './NewPost'
 import Detail from './Detail'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
+import EditPost from './EditPost'
 
 import * as firebase from 'firebase';
 
@@ -33,10 +34,6 @@ import * as firebase from 'firebase';
 
 
 class Main extends Component{
-  constructor(props){
-    super(props);
-
-  }
 
   // requireAuth(nextState, replace, next){
   //   console.log("REQUIRING AUTH");
@@ -59,6 +56,8 @@ class Main extends Component{
             <Route exact path='/' component={Home}/>
             <Route path='/car' component={Car}/>
             <Route path='/About' component={About}/>
+
+            <Route path="/EditPost" component={EditPost} />
 
             <Route path='/NewPost' render={() => 
               (
@@ -94,6 +93,8 @@ class Main extends Component{
                 )
               )
             }/>
+
+            <Redirect to="/404" />
 
           </Switch>
         </main>

@@ -61,7 +61,7 @@ class SignIn extends Component{
         <form onSubmit={this.signIn}>
           <div>
             <label><b>Email</b></label>
-            <input type="text" placeholder="Enter Email" value={this.state.email} onChange={this.handleChangeEmail} required/>
+            <input type="email" placeholder="Enter Email" value={this.state.email} onChange={this.handleChangeEmail} required/>
           </div>
 
           <div>

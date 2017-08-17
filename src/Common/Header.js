@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 
 import * as firebase from 'firebase';
+import {Dropdown, Button, NavItem} from 'react-materialize';
 
 var config = {
   apiKey: "AIzaSyBuY9y2xC_54QCn-R42fe7z1yTAoM-eJNk",
@@ -14,23 +15,30 @@ var config = {
 };
 firebase.initializeApp(config);
 
-var currentUser = firebase.auth().currentUser;
+// var currentUser = firebase.auth().currentUser;
 
-firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
-    // User is signed in.
-    currentUser = user;
-    // console.log("USER LOGGED IN");
-  } else {
-    // No user is signed in.
-    currentUser = user;
-    // console.log("NOONE LOGGED IN");
-  }
-});
+// firebase.auth().onAuthStateChanged((user) => {
+//   if (user) {
+//     // User is signed in.
+//     currentUser = user;
+//     console.log("USER LOGGED IN");
+//   } else {
+//     // No user is signed in.
+//     currentUser = user;
+//     console.log("NOONE LOGGED IN");
+//   }
+// });
 
 
 
 class App extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      currentUser: null
+    }
+  }
+
   signOut(){
     firebase.auth().signOut().then(() => {
       // Sign-out successful.
@@ -41,7 +49,29 @@ class App extends Component{
     });
   }
 
+  componentDidMount(){
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in.
+        this.setState({
+          currentUser: user
+        })
+        console.log("USER LOGGED IN");
+        // console.log(user);
+        // console.log(currentUser);
+      } else {
+        // No user is signed in.
+        this.setState({
+          currentUser: user
+        })
+        // currentUser = user;
+        console.log("NOONE LOGGED IN");
+      }
+    });
+  }
+
   render(){
+
     return(
 
       <div>
@@ -51,7 +81,7 @@ class App extends Component{
               <a className="navbar-brand" >Buy and Sell</a>
             </div>
             
-            {currentUser === null ? 
+            {this.state.currentUser === null ? 
               (
                 <ul className="nav navbar-nav">
                   <li><Link to="/">Home</Link></li>
@@ -66,14 +96,23 @@ class App extends Component{
                   <li><Link to="/">Home</Link></li>
                   <li><Link to="/car">Cars</Link></li>
                   <li><Link to="/about">About</Link></li>
+                  <li> <label>Hello, {this.state.currentUser.email} </label></li>
                   <li><Link to="/" onClick={this.signOut}> Sign Out </Link></li>
+                  <li><Dropdown trigger={
+                        <Button>Drop me!</Button>
+                        }>
+                        <NavItem>one</NavItem>
+                        <NavItem>two</NavItem>
+                        <NavItem divider />
+                        <NavItem>three</NavItem>
+                      </Dropdown>
+                  </li>
                 </ul>   
               )
-            }          
+            }
 
             
 
-            
           </div>
         </nav>
       </div>

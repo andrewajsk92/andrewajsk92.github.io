@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 // import {ButtonToolbar, Button, ButtonGroup, Col,Grid, Row } from 'react-bootstrap';
 
-import {Button, Icon, Col, Row} from 'react-materialize';
+import {Button, Col, Row, Input} from 'react-materialize';
 
 import { Link } from 'react-router-dom';
 
@@ -10,13 +10,11 @@ import SearchBar from './SearchBar.js';
 
 import * as firebase from 'firebase';
 // import NoImageIcon from './NoImageIcon.jpeg';
-import UncontrolledCarousel from '../Tech/UncontrolledCarousel';
+// import UncontrolledCarousel from '../Tech/UncontrolledCarousel';
 
 
 
 
-
-const user = firebase.auth().currentUser;
 
 class Home extends Component {
 	constructor(props){
@@ -50,7 +48,8 @@ class Home extends Component {
     			Price: data.val().Price,
     			Availability: data.val().Availability,
           Buy: data.val().Buy,
-          Key: data.key
+          Key: data.key,
+          User: data.val().User
     		}
     		items.push(item);
     		this.setState({BuyItems: items});
@@ -69,7 +68,8 @@ class Home extends Component {
           Price: data.val().Price,
           Availability: data.val().Availability,
           Buy: data.val().Buy,
-          Key: data.key
+          Key: data.key,
+          User: data.val().User
         }
         items.push(item);
         this.setState({SellItems: items});
@@ -131,15 +131,14 @@ class Home extends Component {
     // console.log(this.state.BuyItems);
     // console.log(this.state.SellItems);
     // console.log(firebase.auth().currentUser);
+    console.log(this.state.SortPrice);
     return (
     	<div>
         <Col s={2}> 
-          <div>
-            <form>
-              <label> <input type="radio" value="Increasing" checked={this.state.SortPrice ==='Increasing'}  onChange={this.handleSortPrice}/> Increasing </label>
-              <label> <input type="radio" value="Decreasing" checked={this.state.SortPrice === 'Decreasing'} onChange={this.handleSortPrice}/> Decreasing </label>
-            </form>
-          </div>
+          <Row>
+            <Input type="radio" label="Increasing" value="Increasing" checked={this.state.SortPrice ==='Increasing'}  onChange={this.handleSortPrice}/>
+            <Input type="radio" label="Decreasing" value="Decreasing" checked={this.state.SortPrice === 'Decreasing'} onChange={this.handleSortPrice}/>
+          </Row>
 
           <div>
             <form>
@@ -152,18 +151,18 @@ class Home extends Component {
         <Col s={10}>
           {firebase.auth().currentUser !== null ? (<Link to="/NewPost" ><Button>New Post</Button></Link>) : ('')}
 
-          <Row>
+          <div>
             <Col s={4} m={4}></Col>
             <Col s={4} m={4}>
-              <form>
-                <label> <input type="radio" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/> Buy </label>
-                <label> <input type="radio" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> Sell </label>
-              </form>
+              <Row>
+                <Input type="radio" label="Buy" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/>  
+                <Input type="radio" label="Sell" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> 
+              </Row>
               {this.state.BuyOrSell}
 
             </Col>
             <Col s={4} m={4}></Col>
-          </Row>
+          </div>
 
           <div>
             {this.state.BuyOrSell === 'Buy' ? (

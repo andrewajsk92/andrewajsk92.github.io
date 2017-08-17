@@ -18,9 +18,9 @@ class UncontrolledCarousel extends Component{
       <div>
         {this.props.Pics !== undefined ? (
           <Carousel>
-            {Object.values(this.props.Pics).map((pic,i) => 
+            {Object.keys(this.props.Pics).map((pic,i) => 
               <Carousel.Item key={i}>
-                <img width={500} height={300} alt="NOT FOUND" src={pic}/>
+                <img width={500} height={300} alt="NOT FOUND" src={this.props.Pics[pic]}/>
               </Carousel.Item>
             )}
           </Carousel>
