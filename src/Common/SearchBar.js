@@ -4,6 +4,9 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import UncontrolledCarousel from '../Tech/UncontrolledCarousel';
 
+import {Col, Row, Input} from 'react-materialize';
+
+
 
 
 class SearchBar extends Component{
@@ -12,14 +15,26 @@ class SearchBar extends Component{
     super(props);
     this.state = {
       items: [],
-      BuyOrSell: 'Buy'
+      BuyItems: [],
+      SellItems: [],
+      BuyOrSell: 'Buy',
+
+      searchKeyword: ''
     }
 
     this.filterList = this.filterList.bind(this);
   }
 
   filterList(event){
-    var updatedList = this.props.items;
+    this.setState({
+      searchKeyword: event.target.value
+    })
+    if(this.state.BuyOrSell === 'Buy'){
+      var updatedList = this.state.BuyItems;
+    } else {
+      updatedList = this.state.SellItems;
+    }
+    // var updatedList = this.state.items;
     updatedList = updatedList.filter((item) => {
       return item.Title.toLowerCase().search(
         event.target.value.toLowerCase()) !== -1;
@@ -32,9 +47,45 @@ class SearchBar extends Component{
     // console.log(nextProps);
     // console.log(this.props.items);
     this.setState({
-      items: nextProps.items,
-      BuyOrSell: nextProps.BuyOrSell
+      BuyItems: nextProps.BuyItems,
+      SellItems: nextProps.SellItems,
+      items: nextProps.BuyItems
     })
+  }
+
+  // componentDidMount(){
+  //   this.setState({
+  //     BuyItems: this.props.BuyItems,
+  //     SellItems: this.props.SellItems
+  //   })
+  // }
+
+  handleBuyOrSell(event){
+    this.setState({
+      BuyOrSell: event.target.value,
+    });
+
+    if(event.target.value === 'Buy'){
+      this.setState({
+        items: this.state.BuyItems
+      })
+    } else{
+      this.setState({
+        items: this.state.SellItems
+      })
+    }
+
+    if(event.target.value === 'Buy'){
+      var updatedList = this.state.BuyItems;
+    } else {
+      updatedList = this.state.SellItems;
+    }
+    updatedList = updatedList.filter((item) => {
+      return item.Title.toLowerCase().search(
+        this.state.searchKeyword.toLowerCase()) !== -1;
+    });
+    this.setState({items: updatedList});
+
   }
 
 
@@ -51,30 +102,30 @@ class SearchBar extends Component{
           </fieldset>
         </form>
 
-        {this.state.items.map((content, i) => 
-          <Content key = {i} contentData = {content} BuyOrSell={this.state.BuyOrSell}/>
-        )}
+        <div>
+          <Col s={4} m={4}></Col>
+          <Col s={4} m={4}>
+            <Row>
+              <Input type="radio" label="Buy" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell.bind(this)}/>  
+              <Input type="radio" label="Sell" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell.bind(this)}/> 
+            </Row>
+
+          </Col>
+          <Col s={4} m={4}></Col>
+        </div>
+
+        <div>
+          {this.state.items.map((content, i) => 
+            <Content key = {i} contentData = {content} BuyOrSell={this.state.BuyOrSell}/>
+          )}
+        </div>
+        
+        
         
       </div>
     );
   }
 }
-// <Content items={this.state.items}/>
-
-// class List extends Component {
-//   render(){
-//     console.log(this.props.items);
-//     return (
-//       <ul className="list-group">
-//       {
-//         this.props.items.map((item, i) => {
-//           <li className="list-group-item" data-category={item} key={i}>{item.Title}</li>
-//         })
-//        }
-//       </ul>
-//     )  
-//   }
-// }
 
 class Content extends Component{
   render(){
@@ -94,3 +145,22 @@ class Content extends Component{
 }
 
 export default SearchBar;
+
+// {this.state.BuyOrSell === 'Buy' ? 
+//           (
+//             <Row>
+//               {this.state.BuyItems.map((content, i) => 
+//                 <Content key = {i} contentData = {content} BuyOrSell={this.state.BuyOrSell}/>
+//               )}
+//             </Row>
+//           ) : (
+//             <Row>
+//               {this.state.SellItems.map((content, i) => 
+//                 <Content key = {i} contentData = {content} BuyOrSell={this.state.BuyOrSell}/>
+//               )}
+//             </Row>
+//           )
+//         }
+
+
+

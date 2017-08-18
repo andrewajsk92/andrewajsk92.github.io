@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import '../App.css';
 
 import * as firebase from 'firebase';
-import {Dropdown, Button, NavItem} from 'react-materialize';
+import {Dropdown, Button, NavItem, Navbar} from 'react-materialize';
 
 var config = {
   apiKey: "AIzaSyBuY9y2xC_54QCn-R42fe7z1yTAoM-eJNk",
@@ -75,46 +75,43 @@ class App extends Component{
     return(
 
       <div>
-        <nav className="navbar navbar-default">
-          <div className="container-fluid">
-            <div className="navbar-header">
-              <a className="navbar-brand" >Buy and Sell</a>
-            </div>
-            
-            {this.state.currentUser === null ? 
-              (
-                <ul className="nav navbar-nav">
-                  <li><Link to="/">Home</Link></li>
-                  <li><Link to="/car">Cars</Link></li>
-                  <li><Link to="/about">About</Link></li>
-                  <li><Link to="/SignIn"> Log In </Link></li>
-                  <li><Link to="/SignUp"> Sign Up </Link></li>
-                </ul>
 
-              ) : (
-                <ul className="nav navbar-nav">
-                  <li><Link to="/">Home</Link></li>
-                  <li><Link to="/car">Cars</Link></li>
-                  <li><Link to="/about">About</Link></li>
-                  <li> <label>Hello, {this.state.currentUser.email} </label></li>
-                  <li><Link to="/" onClick={this.signOut}> Sign Out </Link></li>
-                  <li><Dropdown trigger={
-                        <Button>Drop me!</Button>
-                        }>
-                        <NavItem>one</NavItem>
-                        <NavItem>two</NavItem>
-                        <NavItem divider />
-                        <NavItem>three</NavItem>
-                      </Dropdown>
-                  </li>
-                </ul>   
-              )
-            }
 
-            
+        
+          {this.state.currentUser === null ? 
+            (
+              <Navbar brand="Buy and Sell" right>
+                <li><NavLink to="/">  Home  </NavLink> </li>
+                <li><NavLink to="/about"> About </NavLink> </li>
+                <li><NavLink to="/SignIn"> Log In </NavLink> </li>
+                <li><NavLink to="/SignUp"> Sign Up </NavLink> </li>
+              </Navbar>
 
-          </div>
-        </nav>
+              
+            ) :(
+              <Navbar brand="Buy and Sell" right>
+                <li><NavLink to="/">  Home  </NavLink> </li>
+                <li><NavLink to="/about"> About </NavLink> </li>
+                <label>Hello, {this.state.currentUser.email} </label>
+                <li> <NavLink to="/" onClick={this.signOut}> Sign Out </NavLink> </li>
+                <Dropdown trigger={
+                  <Button>Drop me!</Button>
+                  }>
+                  <NavItem>one</NavItem>
+                  <NavItem>two</NavItem>
+                  <NavItem divider />
+                  <NavItem>three</NavItem>
+                </Dropdown>
+              </Navbar>
+            )
+          }
+
+
+
+
+
+
+        
       </div>
     )
   }
@@ -124,13 +121,37 @@ class App extends Component{
 export default App;
 
 
-            // <ul className="nav navbar-nav">
-            //   <li><Link to="/">Home</Link></li>
-            //   <li><Link to="/car">Cars</Link></li>
-            //   <li><Link to="/about">About</Link></li>
-            //   <li><Link to="/SignIn"> Log In </Link></li>
-            //   <li><Link to="/SignUp"> Sign Up </Link></li>
-            //   <li><Link to="/" onClick={this.signOut}> Sign Out </Link></li>
-            // </ul>
+// <nav className="navbar navbar-default">
+//           <div className="container-fluid">
+//             <div className="navbar-header">
+//               <a className="navbar-brand" >Buy and Sell</a>
+//             </div>
+            
+//             {this.state.currentUser === null ? 
+//               (
+//                 <ul className="nav navbar-nav">
+//                   <li><Link to="/">Home</Link></li>
+//                   <li><Link to="/car">Cars</Link></li>
+//                   <li><Link to="/about">About</Link></li>
+//                   <li><Link to="/SignIn"> Log In </Link></li>
+//                   <li><Link to="/SignUp"> Sign Up </Link></li>
+//                 </ul>
 
+//               ) : (
+//                 <ul className="nav navbar-nav">
+//                   <li><Link to="/">Home</Link></li>
+//                   <li><Link to="/car">Cars</Link></li>
+//                   <li><Link to="/about">About</Link></li>
+//                   <li> <label>Hello, {this.state.currentUser.email} </label></li>
+//                   <li><Link to="/" onClick={this.signOut}> Sign Out </Link></li>
+//                   <li>
+//                   </li>
+//                 </ul>   
+//               )
+//             }
+
+            
+
+//           </div>
+//         </nav>
 

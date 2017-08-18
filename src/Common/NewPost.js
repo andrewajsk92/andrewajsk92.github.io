@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {ButtonToolbar, Button} from 'react-bootstrap';
+import { Button} from 'react-materialize';
 import { Link, Redirect } from 'react-router-dom';
 import * as firebase from 'firebase';
 
@@ -153,10 +153,8 @@ class NewPost extends Component{
             </div>
 
             <div>
-              <ButtonToolbar>
-                <Button type="submit" value="Submit"  bsStyle="primary">Post</Button>
+                <Button type="submit" value="Submit" >Post</Button>
                 <Link to="/"> <Button onClick={this.cancel}>Cancel</Button></Link>
-              </ButtonToolbar>
             </div>
 
             <div className="imgPreview">

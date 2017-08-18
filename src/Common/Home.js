@@ -23,11 +23,9 @@ class Home extends Component {
     	BuyItems: [],
       SellItems: [],
 
-      BuyOrSell: 'Buy',
       SortPrice: 'Increasing',
       Recent: 'MostRecent'
     }
-    this.handleBuyOrSell = this.handleBuyOrSell.bind(this);
     this.handleSortPrice = this.handleSortPrice.bind(this);
     this.handleRecent = this.handleRecent.bind(this);
   }
@@ -78,11 +76,7 @@ class Home extends Component {
     })
   }
 
-  handleBuyOrSell(e){
-    this.setState({
-      BuyOrSell: e.target.value
-    })
-  }
+  
 
   handleSortPrice(e){
     this.setState({
@@ -133,7 +127,7 @@ class Home extends Component {
     // console.log(firebase.auth().currentUser);
     console.log(this.state.SortPrice);
     return (
-    	<div>
+    	<Row>
         <Col s={2}> 
           <Row>
             <Input type="radio" label="Increasing" value="Increasing" checked={this.state.SortPrice ==='Increasing'}  onChange={this.handleSortPrice}/>
@@ -142,8 +136,8 @@ class Home extends Component {
 
           <div>
             <form>
-              <label> <input type="radio" value="MostRecent" checked={this.state.Recent ==='MostRecent'}  onChange={this.handleRecent}/> Most Recent </label>
-              <label> <input type="radio" value="LeastRecent" checked={this.state.Recent === 'LeastRecent'} onChange={this.handleRecent}/> Least Recent </label>
+              <Input type="radio" label="Most Recent" value="MostRecent" checked={this.state.Recent ==='MostRecent'}  onChange={this.handleRecent}/> 
+              <Input type="radio" label="Least Recent" value="LeastRecent" checked={this.state.Recent === 'LeastRecent'} onChange={this.handleRecent}/> 
             </form>
           </div>
         </Col>
@@ -152,35 +146,11 @@ class Home extends Component {
           {firebase.auth().currentUser !== null ? (<Link to="/NewPost" ><Button>New Post</Button></Link>) : ('')}
 
           <div>
-            <Col s={4} m={4}></Col>
-            <Col s={4} m={4}>
-              <Row>
-                <Input type="radio" label="Buy" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/>  
-                <Input type="radio" label="Sell" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> 
-              </Row>
-              {this.state.BuyOrSell}
-
-            </Col>
-            <Col s={4} m={4}></Col>
-          </div>
-
-          <div>
-            {this.state.BuyOrSell === 'Buy' ? (
-              <div>
-              <h3> HIHIHI </h3>
-              <SearchBar items={this.state.BuyItems} BuyOrSell={this.state.BuyOrSell}/>
-              </div>
-            ) : (
-              <div>
-              <h4> BYEBYE </h4>
-              <SearchBar items={this.state.SellItems} BuyOrSell={this.state.BuyOrSell}/>
-              </div>
-            )
-            }
+            <SearchBar BuyItems={this.state.BuyItems} SellItems={this.state.SellItems}/>
           </div>
      
         </Col>
-    	</div>
+    	</Row>
     );
   }
 }
@@ -188,6 +158,22 @@ class Home extends Component {
 export default Home;
 
 
+
+
+
+
+// <div>
+//             <Col s={4} m={4}></Col>
+//             <Col s={4} m={4}>
+//               <Row>
+//                 <Input type="radio" label="Buy" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/>  
+//                 <Input type="radio" label="Sell" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> 
+//               </Row>
+//               {this.state.BuyOrSell}
+
+//             </Col>
+//             <Col s={4} m={4}></Col>
+//           </div>
 
 
 

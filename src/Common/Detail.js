@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-// import {Carousel} from 'react-bootstrap';
+
 import {Button, Input} from 'react-materialize';
 // import Hamster from './Hamster.jpg';
 import { Link, Redirect } from 'react-router-dom';
@@ -16,7 +16,7 @@ class Detail extends Component{
   constructor(props){
     super(props);
     this.state={
-      Pics: '',
+      Pics: [],
 
       BuyOrSell: 'Buy',
       ItemKey: '',
@@ -94,7 +94,6 @@ class Detail extends Component{
   }
 
   render(){
-    console.log(this.state.OldComment);
     // console.log(this.state.Pics);
     // console.log(Object.values(this.state.Pics));
     if(this.state.redirect === true){
@@ -182,7 +181,7 @@ class Detail extends Component{
                 {Object.keys(this.state.OldComment).map((comment, i) => 
                   <div key={i}>
                     {this.state.OldComment[comment].Comment}
-                    <div style={{paddingLeft:"20"}}>
+                    <div style={{paddingLeft:20 }}>
                       Posted by {this.state.OldComment[comment].Commentor}
                     </div>
                   </div>
@@ -200,32 +199,4 @@ class Detail extends Component{
 
 export default Detail;
 
-// {this.state.Pics !== undefined ? 
-//             (
-//               <Carousel images={Object.values(this.state.Pics)} />
-//             ) : (
-//               <img src={NoImageIcon} width={500} height={300}/>
-//             )
-//           }
-
-
-// <ControlledCarousel Pics={this.state.Pics}/>
-
-
- // <img src='asdf' alt='nope' onError={console.log("WTF")} />
-        // <div>
-        //   koollllllllllllllllll
-        // </div>
-
-        // <div>
-        //   <img src={this.state.image} onError={this.changePic} />
-        // </div>
-
-        // <div>
-        // HMMMMMM
-        // </div>
-
-        // <div>
-        //   <img src={this.state.image} onError={this.setState({image: NoImageIcon})} />
-        // </div>
 

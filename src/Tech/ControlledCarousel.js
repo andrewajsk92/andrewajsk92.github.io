@@ -1,80 +1,58 @@
 import React, {Component} from 'react';
 
-import {Carousel} from 'react-bootstrap';
+import {Carousel} from 'react-materialize';
 
 import NoImageIcon from '../Common/NoImageIcon.jpeg';
-// import Hamster from '../Common/Hamster.jpg';
 
 class ControlledCarousel extends Component{
-
   constructor(props){
     super(props);
     this.state = {
-      index: 0,
-      direciton: null
+      Pics: []
     }
   }
 
-  // getInitialState() {
-  //   return {
-  //     index: 0,
-  //     direction: null
-  //   };
-  // }
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      Pics: nextProps.Pics
+    })
+  }
 
-  // handleSelect(selectedIndex, e) {
-  //   alert('selected=' + selectedIndex + ', direction=' + e.direction);
-  //   this.setState({
-  //     index: selectedIndex,
-  //     direction: e.direction
-  //   });
-  // }
-
-  render() {
-    // console.log(this.props.Pics);
-    // if(this.props.Pics !== null && this.props.Pics !== undefined){
-    //   console.log(Object.values(this.props.Pics));
-    // }
-    return (
+  render(){
+    console.log(this.state.Pics);
+    let keys = Object.keys(this.state.Pics);
+    console.log(keys);
+    let values = [];
+    console.log(this.state.Pics.length);
+    for (let i = 0; i < keys.length; i++){
+      values.push(this.state.Pics[keys[i]]);
+      console.log(this.state.Pics[keys[i]]);
+    }
+    console.log(values);
+    return(
       <div>
-        {this.props.Pics !== undefined ? (
-          <Carousel activeIndex={this.state.index} direction={this.state.direction} onSelect={(selectedIndex, e)=>this.setState({index: selectedIndex, direction: e.direction})}>
-            {Object.keys(this.props.Pics).map((pic,i) => 
-              <Carousel.Item key={i}>
-                <img width={500} height={300} alt="NOT FOUND" src={this.props.Pics[pic]}/>
-              </Carousel.Item>
-            )}
-          </Carousel>
+        {this.state.Pics !== undefined && this.state.Pics !== [] && this.state.Pics !== null? 
+          (
+            <Carousel images={values} />
           ) : (
             <img src={NoImageIcon} alt="NOT FOUND" width={500} height={300}/>
-
           )
         }
       </div>
-    );
-  }
+    )
+  }  
 }
 
 export default ControlledCarousel;
 
-        // <Carousel.Item>
-        //   <img width={500} height={300} alt="900x500" src={NoImageIcon}/>
-        //   <Carousel.Caption>
-        //     <h3>First slide label</h3>
-        //     <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        //   </Carousel.Caption>
-        // </Carousel.Item>
-        // <Carousel.Item>
-        //   <img width={500} height={300} alt="900x500" src={Hamster}/>
-        //   <Carousel.Caption>
-        //     <h3>Second slide label</h3>
-        //     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        //   </Carousel.Caption>
-        // </Carousel.Item>
-        // <Carousel.Item>
-        //   <img width={500} height={300} alt="900x500" src="/assets/carousel.png"/>
-        //   <Carousel.Caption>
-        //     <h3>Third slide label</h3>
-        //     <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-        //   </Carousel.Caption>
-        // </Carousel.Item>
+// {this.props.Pics !== undefined && this.props.Pics !== [] ? 
+//           (
+//             <Carousel options={{ fullWidth: true }}>
+//               {Object.keys(this.props.Pics).map((key, i) => 
+//                 <img src={this.props.Pics[key]} alt="NOT FOUND" key={i}/>
+//               )}
+//             </Carousel>
+//           ) : (
+//             <img src={NoImageIcon} alt="NOT FOUND" width={500} height={300}/>
+//           )
+//         }
