@@ -3,9 +3,11 @@ import React, {Component} from 'react';
 import {Carousel} from 'react-materialize';
 import NoImageIcon from '../Common/NoImageIcon.jpeg';
 
-class UncontrolledCarousel extends Component{
+class HomeCarousel extends Component{
   
   render(){
+    // console.log(this.props.Title);
+    // console.log(this.props.Pics);
     return(
       <div>
         {this.props.Pics !== undefined && this.props.Pics !== [] ? 
@@ -16,7 +18,9 @@ class UncontrolledCarousel extends Component{
               )}
             </Carousel>
           ) : (
-            <img src={NoImageIcon} alt="NOT FOUND" width={500} height={300}/>
+            <Carousel options={{fullWidth: true}} >
+              <img src={NoImageIcon} alt="NOT FOUND"/>
+            </Carousel>
           )
         }
       </div>
@@ -24,7 +28,7 @@ class UncontrolledCarousel extends Component{
   }  
 }
 
-export default UncontrolledCarousel;
+export default HomeCarousel;
 
 
 

@@ -5,7 +5,7 @@ import {Button, Input} from 'react-materialize';
 // import Hamster from './Hamster.jpg';
 import { Link, Redirect } from 'react-router-dom';
 
-import ControlledCarousel from '../Tech/ControlledCarousel';
+import DetailCarousel from '../Tech/DetailCarousel';
 import * as firebase from 'firebase';
 import NoImageIcon from './NoImageIcon.jpeg';
 
@@ -147,7 +147,7 @@ class Detail extends Component{
         </div>
 
         <div>
-          <ControlledCarousel Pics={this.state.Pics}/>
+          <DetailCarousel Pics={this.state.Pics}/>
         </div>
 
 

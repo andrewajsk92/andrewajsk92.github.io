@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 
 
 import { Link } from 'react-router-dom';
-import UncontrolledCarousel from '../Tech/UncontrolledCarousel';
+import HomeCarousel from '../Tech/HomeCarousel';
 
-import {Col, Row, Input} from 'react-materialize';
+import {Col, Row, Input, Card, CardTitle} from 'react-materialize';
+
+import NoImageIcon from './NoImageIcon.jpeg';
 
 
 
@@ -102,7 +104,7 @@ class SearchBar extends Component{
           </fieldset>
         </form>
 
-        <div>
+        <Row>
           <Col s={4} m={4}></Col>
           <Col s={4} m={4}>
             <Row>
@@ -112,13 +114,15 @@ class SearchBar extends Component{
 
           </Col>
           <Col s={4} m={4}></Col>
-        </div>
+        </Row>
 
-        <div>
+        <Row>
           {this.state.items.map((content, i) => 
-            <Content key = {i} contentData = {content} BuyOrSell={this.state.BuyOrSell}/>
+            <Col s={12} m={6} l={4} key={i}>
+              <Content contentData = {content} BuyOrSell={this.state.BuyOrSell}/>
+            </Col>
           )}
-        </div>
+        </Row>
         
         
         
@@ -131,20 +135,37 @@ class Content extends Component{
   render(){
 
     return (
-      <ul className="list-group">
-        <li className="list-group-item" > <Link to={"Detail/" + this.props.BuyOrSell + "/" +this.props.contentData.Key} > {this.props.contentData.Title} </Link></li>
-        <li className="list-group-item" > ${this.props.contentData.Price}</li>
-        <li className="list-group-item" > <UncontrolledCarousel Pics={this.props.contentData.Pics}/> </li>
-        <li className="list-group-item" > {this.props.contentData.PostedDate} </li>
-        <li className="list-group-item" > {this.props.contentData.Availability} </li>
-        <li className="list-group-item" > {this.props.contentData.Key} </li>
-        <li className="list-group-item" > {this.props.contentData.User} </li>
-      </ul>
+      <Card 
+        header={<HomeCarousel reveal Pics={this.props.contentData.Pics} Title={this.props.contentData.Title} waves='light'/>}
+        title={<Link to={"Detail/" + this.props.BuyOrSell + "/" +this.props.contentData.Key} > {this.props.contentData.Title} </Link>}
+        reveal={<p>Here is some more information about this product that is only revealed once clicked on.</p>}
+      >
+        <p>${this.props.contentData.Price}   /   distance</p>
+      </Card>
     )
   }
 }
 
 export default SearchBar;
+
+
+
+
+// <ul className="list-group">
+//         <li className="list-group-item" > <UncontrolledCarousel Pics={this.props.contentData.Pics}/> </li>
+//         <li className="list-group-item" > <Link to={"Detail/" + this.props.BuyOrSell + "/" +this.props.contentData.Key} > {this.props.contentData.Title} </Link></li>
+//         <li className="list-group-item" > ${this.props.contentData.Price}</li>
+//         <li className="list-group-item" > {this.props.contentData.PostedDate} </li>
+//         <li className="list-group-item" > {this.props.contentData.Availability} </li>
+//         <li className="list-group-item" > {this.props.contentData.Key} </li>
+//         <li className="list-group-item" > {this.props.contentData.User} </li>
+//       </ul>
+
+
+
+
+
+
 
 // {this.state.BuyOrSell === 'Buy' ? 
 //           (

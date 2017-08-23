@@ -83,8 +83,10 @@ class Home extends Component {
       SortPrice: e.target.value,
       BuyItems: this.state.BuyItems.sort((a, b) => {
         if(e.target.value === 'Increasing'){ 
+          console.log("INCR");
           return a.Price - b.Price;
         } else {
+          console.log("DECR");
           return b.Price - a.Price;
         }
       }),
@@ -104,10 +106,8 @@ class Home extends Component {
       Recent: e.target.value,
       BuyItems: this.state.BuyItems.sort((a, b) => {
         if(e.target.value === 'MostRecent'){
-          console.log("MOST");
           return a.PostedDate < b.PostedDate;
         } else {
-          console.log("LEAST");
           return b.PostedDate >= a.PostedDate;
         }
       }),
@@ -125,7 +125,7 @@ class Home extends Component {
     // console.log(this.state.BuyItems);
     // console.log(this.state.SellItems);
     // console.log(firebase.auth().currentUser);
-    console.log(this.state.SortPrice);
+    // console.log(this.state.SortPrice);
     return (
     	<Row>
         <Col s={2}> 

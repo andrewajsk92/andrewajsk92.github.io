@@ -10,6 +10,7 @@ import Detail from './Detail'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
 import EditPost from './EditPost'
+import PromisePractice from './PromisePractice'
 
 import * as firebase from 'firebase';
 
@@ -56,6 +57,8 @@ class Main extends Component{
             <Route exact path='/' component={Home}/>
             <Route path='/car' component={Car}/>
             <Route path='/About' component={About}/>
+
+            <Route path='/PromisePractice' component={PromisePractice}/>
 
             <Route path="/EditPost" component={EditPost} />
 
