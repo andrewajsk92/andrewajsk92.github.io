@@ -36,10 +36,12 @@ class Home extends Component {
     const sellRef = firebase.database().ref().child('Sell');
 
     buyRef.on("value", snap => {
-    	var items = [];
+    	let items = [];
+      let counter = 0;
+      let numChildren = snap.numChildren();
 
     	snap.forEach((data) => {
-    		var item = {
+    		let item = {
     			Title: data.val().Title,
     			Pics: data.val().Pics,
     			PostedDate: data.val().PostedDate,
@@ -50,16 +52,27 @@ class Home extends Component {
           User: data.val().User
     		}
     		items.push(item);
-    		this.setState({BuyItems: items});
+    		// this.setState({BuyItems: items});
+        counter = counter + 1;
         // console.log(data.val());
+        if(counter === numChildren){
+          this.setState({
+            BuyItems: items.sort((a, b) => {
+              console.log("INCR");
+              return a.Price - b.Price;
+            })
+          })
+        }
     	})
     })
 
     sellRef.on("value", snap => {
-      var items = [];
+      let items = [];
+      let counter = 0;
+      let numChildren = snap.numChildren();
 
       snap.forEach((data) => {
-        var item = {
+        let item = {
           Title: data.val().Title,
           Pics: data.val().Pics,
           PostedDate: data.val().PostedDate,
@@ -72,6 +85,17 @@ class Home extends Component {
         items.push(item);
         this.setState({SellItems: items});
         // console.log(data.val());
+
+        counter = counter + 1;
+        // console.log(data.val());
+        if(counter === numChildren){
+          this.setState({
+            SellItems: items.sort((a, b) => {
+              console.log("INCR");
+              return a.Price - b.Price;
+            })
+          })
+        }
       })
     })
   }
