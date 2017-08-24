@@ -92,6 +92,7 @@ class Detail extends Component{
   }
 
   render(){
+    console.log(this.state);
     // console.log(this.state.Pics);
     // console.log(Object.values(this.state.Pics));
     if(this.state.redirect === true){

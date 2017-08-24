@@ -129,14 +129,7 @@ class SearchBar extends Component{
         <Row>
           {this.state.items.map((content, i) => 
             <Col s={12} m={6} l={4} key={i}>
-              <Card 
-                header={<HomeCarousel reveal Pics={content.Pics} Title={content.Title} waves='light'/>}
-                title={<Link to={"Detail/" + content.BuyOrSell + "/" + content.Key} > {content.Title} </Link>}
-                reveal={<p>Here is some more information about this product that is only revealed once clicked on.</p>}
-              >
-                <p> {content.User} </p>
-                <p>${content.Price} / distance </p>
-              </Card>
+              <Content contentData = {content} BuyOrSell={this.state.BuyOrSell}/>
             </Col>
           )}
         </Row>
@@ -148,9 +141,17 @@ class SearchBar extends Component{
   }
 }
 
-// <Col s={12} m={6} l={4} key={i}>
-//               <Content contentData = {content} BuyOrSell={this.state.BuyOrSell}/>
-//             </Col>
+            // <Col s={12} m={6} l={4} key={i}>
+            //   <Card 
+            //     header={<HomeCarousel reveal Pics={content.Pics} Title={content.Title} waves='light'/>}
+            //     title={<Link to={"Detail/" + content.BuyOrSell + "/" + content.Key} > {content.Title} </Link>}
+            //     reveal={<p>Here is some more information about this product that is only revealed once clicked on.</p>}
+            //     key={i}
+            //   >
+            //     <p> {content.User} </p>
+            //     <p>${content.Price} / distance </p>
+            //   </Card>
+            // </Col>
 
 class Content extends Component{
   render(){
