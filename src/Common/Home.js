@@ -23,11 +23,10 @@ class Home extends Component {
     	BuyItems: [],
       SellItems: [],
 
-      SortPrice: 'Increasing',
-      Recent: 'MostRecent'
+      SortPrice: 'Increasing'
     }
     this.handleSortPrice = this.handleSortPrice.bind(this);
-    this.handleRecent = this.handleRecent.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   componentDidMount(){
@@ -125,25 +124,6 @@ class Home extends Component {
     })
   }
 
-  handleRecent(e){
-    this.setState({
-      Recent: e.target.value,
-      BuyItems: this.state.BuyItems.sort((a, b) => {
-        if(e.target.value === 'MostRecent'){
-          return a.PostedDate < b.PostedDate;
-        } else {
-          return b.PostedDate >= a.PostedDate;
-        }
-      }),
-      SellItems: this.state.SellItems.sort((a, b) => {
-        if(e.target.value === 'MostRecent '){ 
-          return a.PostedDate < b.PostedDate;
-        } else {
-          return b.PostedDate >= a.PostedDate;
-        }
-      })
-    })
-  }
 
   render(){
     // console.log(this.state.BuyItems);
@@ -158,12 +138,7 @@ class Home extends Component {
             <Input type="radio" label="Decreasing" value="Decreasing" checked={this.state.SortPrice === 'Decreasing'} onChange={this.handleSortPrice}/>
           </Row>
 
-          <div>
-            <form>
-              <Input type="radio" label="Most Recent" value="MostRecent" checked={this.state.Recent ==='MostRecent'}  onChange={this.handleRecent}/> 
-              <Input type="radio" label="Least Recent" value="LeastRecent" checked={this.state.Recent === 'LeastRecent'} onChange={this.handleRecent}/> 
-            </form>
-          </div>
+          
         </Col>
 
         <Col s={10}>

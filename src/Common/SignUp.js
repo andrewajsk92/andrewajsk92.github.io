@@ -35,6 +35,13 @@ class SignUp extends Component{
         console.log(errorMessage);
       }).then(() => {
         console.log ("ADDED");
+        firebase.auth().currentUser.sendEmailVerification().then(function() {
+         // Email sent.
+         console.log("VERIFIED");
+        }, function(error) {
+         // An error happened.
+         console.log("ERROR");
+        });
         this.setState({
           redirect: true
         });

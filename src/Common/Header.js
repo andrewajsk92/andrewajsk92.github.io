@@ -56,18 +56,15 @@ class App extends Component{
         this.setState({
           currentUser: user
         })
-        console.log("USER LOGGED IN");
-        // console.log(user);
-        // console.log(currentUser);
       } else {
         // No user is signed in.
         this.setState({
           currentUser: user
         })
-        // currentUser = user;
-        console.log("NOONE LOGGED IN");
       }
     });
+
+
   }
 
   render(){

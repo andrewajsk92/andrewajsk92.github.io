@@ -25,6 +25,8 @@ class SearchBar extends Component{
     }
 
     this.filterList = this.filterList.bind(this);
+    this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+    this.handleBuyOrSell = this.handleBuyOrSell.bind(this);
   }
 
   filterList(event){
@@ -48,11 +50,19 @@ class SearchBar extends Component{
     // console.log("PROPS CHANGED WTF MAN");
     // console.log(nextProps);
     // console.log(this.props.items);
-    this.setState({
-      BuyItems: nextProps.BuyItems,
-      SellItems: nextProps.SellItems,
-      items: nextProps.BuyItems
-    })
+    if(this.state.BuyOrSell === 'Buy'){
+      this.setState({
+        BuyItems: nextProps.BuyItems,
+        SellItems: nextProps.SellItems,
+        items: nextProps.BuyItems
+      })
+    } else {
+      this.setState({
+        BuyItems: nextProps.BuyItems,
+        SellItems: nextProps.SellItems,
+        items: nextProps.SellItems
+      })
+    }
   }
 
   // componentDidMount(){
@@ -108,8 +118,8 @@ class SearchBar extends Component{
           <Col s={4} m={4}></Col>
           <Col s={4} m={4}>
             <Row>
-              <Input type="radio" label="Buy" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell.bind(this)}/>  
-              <Input type="radio" label="Sell" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell.bind(this)}/> 
+              <Input type="radio" label="Buy" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/>  
+              <Input type="radio" label="Sell" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> 
             </Row>
 
           </Col>
@@ -119,7 +129,14 @@ class SearchBar extends Component{
         <Row>
           {this.state.items.map((content, i) => 
             <Col s={12} m={6} l={4} key={i}>
-              <Content contentData = {content} BuyOrSell={this.state.BuyOrSell}/>
+              <Card 
+                header={<HomeCarousel reveal Pics={content.Pics} Title={content.Title} waves='light'/>}
+                title={<Link to={"Detail/" + content.BuyOrSell + "/" + content.Key} > {content.Title} </Link>}
+                reveal={<p>Here is some more information about this product that is only revealed once clicked on.</p>}
+              >
+                <p> {content.User} </p>
+                <p>${content.Price} / distance </p>
+              </Card>
             </Col>
           )}
         </Row>
@@ -131,6 +148,10 @@ class SearchBar extends Component{
   }
 }
 
+// <Col s={12} m={6} l={4} key={i}>
+//               <Content contentData = {content} BuyOrSell={this.state.BuyOrSell}/>
+//             </Col>
+
 class Content extends Component{
   render(){
 
@@ -140,7 +161,8 @@ class Content extends Component{
         title={<Link to={"Detail/" + this.props.BuyOrSell + "/" +this.props.contentData.Key} > {this.props.contentData.Title} </Link>}
         reveal={<p>Here is some more information about this product that is only revealed once clicked on.</p>}
       >
-        <p>${this.props.contentData.Price}   /   distance</p>
+        <p> {this.props.contentData.User} </p>
+        <p>${this.props.contentData.Price} / distance </p>
       </Card>
     )
   }

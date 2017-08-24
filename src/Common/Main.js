@@ -11,6 +11,7 @@ import SignIn from './SignIn'
 import SignUp from './SignUp'
 import EditPost from './EditPost'
 import PromisePractice from './PromisePractice'
+import VerifyEmail from './VerifyEmail';
 
 import * as firebase from 'firebase';
 
@@ -46,15 +47,57 @@ class Main extends Component{
   //   }
   //   next();
   // }
+
+  constructor(props){
+    super(props);
+    this.state = {
+      currentUser: null
+    }
+  }
+
+
+  componentDidMount(){
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in.
+        this.setState({
+          currentUser: user
+        })
+
+      } else {
+        // No user is signed in.
+        this.setState({
+          currentUser: user
+        })
+
+      }
+    });
+  }
     
 
   render(){
-        
+
     return(
       <div>
         <main>
           <Switch>
-            <Route exact path='/' component={Home}/>
+            <Route exact path='/' render={() => 
+              (
+                this.state.currentUser === null ?
+                (
+                  <Home />
+                ) : (
+                  
+                  this.state.currentUser.emailVerified === false ? 
+                  (
+                    <VerifyEmail />
+                  ): (
+                    <Home />
+                  )
+                )
+              )
+            }/>
+
             <Route path='/car' component={Car}/>
             <Route path='/About' component={About}/>
 

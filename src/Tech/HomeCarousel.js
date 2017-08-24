@@ -7,7 +7,7 @@ class HomeCarousel extends Component{
   
   render(){
     // console.log(this.props.Title);
-    // console.log(this.props.Pics);
+
     return(
       <div>
         {this.props.Pics !== undefined && this.props.Pics !== [] ? 

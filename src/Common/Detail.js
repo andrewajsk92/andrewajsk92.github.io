@@ -40,13 +40,11 @@ class Detail extends Component{
     const BuyOrSell = usefulStr[0];
     const itemKey = usefulStr[1];
 
-    console.log("BuyOrSell = " + BuyOrSell );
-    console.log("itemKey = " + itemKey);
     this.setState({
       BuyOrSell: BuyOrSell,
       ItemKey: itemKey
     });
-    console.log(itemKey);
+
     const itemRef = firebase.database().ref().child(BuyOrSell).child(itemKey);
     // console.log(itemRef);
 
@@ -99,17 +97,19 @@ class Detail extends Component{
     if(this.state.redirect === true){
       return <Redirect to="/" />
     }
+    console.log(this.state);
     return(
       <div>
         {(firebase.auth().currentUser !== null) && (firebase.auth().currentUser.email === this.state.User) ? 
           (
             <div>
               <Link to="/EditPost" ><Button>Edit</Button></Link>
+              <Button onClick={this.sold}> Sold </Button>
               <Button onClick={this.delete}>Delete</Button>
             </div>
           ) : (
             <div>
-              <Button> Message </Button>
+              <Button> Let's Meet Up! </Button>
             </div>
           )
         }
