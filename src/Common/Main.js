@@ -103,7 +103,14 @@ class Main extends Component{
 
             <Route path='/PromisePractice' component={PromisePractice}/>
 
-            <Route path="/EditPost" component={EditPost} />
+            <Route path="/EditPost/:BuyOrSell/:itemKey" render={() => 
+              this.state.currentUser === null ? 
+              (
+                <Redirect to="/" />
+              ) : (
+                <EditPost />
+              )
+            } />
 
             <Route path='/NewPost' render={() => 
               (
@@ -116,7 +123,7 @@ class Main extends Component{
               )
             }/>
 
-            <Route path='/Detail' component={Detail}/>
+            <Route path='/Detail/:BuyOrSell/:itemKey' component={Detail}/>
 
             <Route path='/SignIn' render={() => 
               (

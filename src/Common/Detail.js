@@ -104,7 +104,7 @@ class Detail extends Component{
         {(firebase.auth().currentUser !== null) && (firebase.auth().currentUser.email === this.state.User) ? 
           (
             <div>
-              <Link to="/EditPost" ><Button>Edit</Button></Link>
+              <Link to={"/EditPost/" + this.state.BuyOrSell +"/" + this.state.ItemKey} ><Button>Edit</Button></Link>
               <Button onClick={this.sold}> Sold </Button>
               <Button onClick={this.delete}>Delete</Button>
             </div>

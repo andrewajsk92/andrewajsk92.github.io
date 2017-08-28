@@ -118,8 +118,9 @@ class SearchBar extends Component{
           <Col s={4} m={4}></Col>
           <Col s={4} m={4}>
             <Row>
-              <Input type="radio" label="Buy" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/>  
-              <Input type="radio" label="Sell" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> 
+              <Col>I am...</Col>
+              <Input type="radio" label="Buying" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/>  
+              <Input type="radio" label="Selling" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> 
             </Row>
 
           </Col>
