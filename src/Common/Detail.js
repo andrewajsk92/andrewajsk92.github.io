@@ -54,17 +54,34 @@ class Detail extends Component{
       //   console.log(data.val());
       // })
       if(snap.val() !== null){
-        this.setState({
-          Title:snap.val().Title,
-          Pics:snap.val().Pics,
-          PostedDate:snap.val().PostedDate,
-          Price: snap.val().Price,
-          Availability:snap.val().Availability,
-          Buy:snap.val().Buy,
-          Key:snap.key,
-          User: snap.val().User,
-          OldComment: snap.val().Comment
-        })
+        if (snap.val().Pics === null || snap.val().Pics === undefined || snap.val().Pics === []){
+          this.setState({
+            Title:snap.val().Title,
+            Pics: snap.val().Pics,
+            PostedDate:snap.val().PostedDate,
+            Price: snap.val().Price,
+            Availability:snap.val().Availability,
+            Buy:snap.val().Buy,
+            Key:snap.key,
+            User: snap.val().User,
+            OldComment: snap.val().Comment
+          })
+        } else {
+          this.setState({
+            Title:snap.val().Title,
+            Pics:Object.keys(snap.val().Pics).map((key) => {
+              console.log(key);
+              return snap.val().Pics[key]
+            }),
+            PostedDate:snap.val().PostedDate,
+            Price: snap.val().Price,
+            Availability:snap.val().Availability,
+            Buy:snap.val().Buy,
+            Key:snap.key,
+            User: snap.val().User,
+            OldComment: snap.val().Comment
+          })
+        }
       }
     })
   }

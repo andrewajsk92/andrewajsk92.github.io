@@ -18,7 +18,7 @@ class DetailCarousel extends Component{
       <div>
         {this.props.Pics !== undefined ? (
           <Carousel activeIndex={this.state.index} direction={this.state.direction} onSelect={(selectedIndex, e)=>this.setState({index: selectedIndex, direction: e.direction})}>
-            {Object.values(this.props.Pics).map((pic,i) => 
+            {this.props.Pics.map((pic,i) => 
               <Carousel.Item key={i}>
                 <img width={500} height={300} alt="NOT FOUND" src={pic}/>
               </Carousel.Item>

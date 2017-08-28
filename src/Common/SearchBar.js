@@ -173,39 +173,3 @@ class Content extends Component{
 export default SearchBar;
 
 
-
-
-// <ul className="list-group">
-//         <li className="list-group-item" > <UncontrolledCarousel Pics={this.props.contentData.Pics}/> </li>
-//         <li className="list-group-item" > <Link to={"Detail/" + this.props.BuyOrSell + "/" +this.props.contentData.Key} > {this.props.contentData.Title} </Link></li>
-//         <li className="list-group-item" > ${this.props.contentData.Price}</li>
-//         <li className="list-group-item" > {this.props.contentData.PostedDate} </li>
-//         <li className="list-group-item" > {this.props.contentData.Availability} </li>
-//         <li className="list-group-item" > {this.props.contentData.Key} </li>
-//         <li className="list-group-item" > {this.props.contentData.User} </li>
-//       </ul>
-
-
-
-
-
-
-
-// {this.state.BuyOrSell === 'Buy' ? 
-//           (
-//             <Row>
-//               {this.state.BuyItems.map((content, i) => 
-//                 <Content key = {i} contentData = {content} BuyOrSell={this.state.BuyOrSell}/>
-//               )}
-//             </Row>
-//           ) : (
-//             <Row>
-//               {this.state.SellItems.map((content, i) => 
-//                 <Content key = {i} contentData = {content} BuyOrSell={this.state.BuyOrSell}/>
-//               )}
-//             </Row>
-//           )
-//         }
-
-
-

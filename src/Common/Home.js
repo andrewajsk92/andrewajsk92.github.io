@@ -23,10 +23,13 @@ class Home extends Component {
     	BuyItems: [],
       SellItems: [],
 
-      SortPrice: 'Increasing'
+      SortPrice: 'Increasing',
+      SortDate: 'AnyTime'
     }
     this.handleSortPrice = this.handleSortPrice.bind(this);
+    this.handleSortDate = this.handleSortDate.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+
   }
 
   componentDidMount(){
@@ -40,16 +43,32 @@ class Home extends Component {
       let numChildren = snap.numChildren();
 
     	snap.forEach((data) => {
-    		let item = {
-    			Title: data.val().Title,
-    			Pics: data.val().Pics,
-    			PostedDate: data.val().PostedDate,
-    			Price: data.val().Price,
-    			Availability: data.val().Availability,
-          Buy: data.val().Buy,
-          Key: data.key,
-          User: data.val().User
-    		}
+        let item = [];
+        if(data.val().Pics === null || data.val().Pics === undefined || data.val().Pics === []){
+      		item = {
+      			Title: data.val().Title,
+      			Pics: data.val().Pics,
+      			PostedDate: data.val().PostedDate,
+      			Price: data.val().Price,
+      			Availability: data.val().Availability,
+            BuyOrSell: data.val().BuyOrSell,
+            Key: data.key,
+            User: data.val().User
+      		}
+        } else{
+          item = {
+            Title: data.val().Title,
+            Pics: Object.keys(data.val().Pics).map((key) => {
+              return data.val().Pics[key]
+            }),
+            PostedDate: data.val().PostedDate,
+            Price: data.val().Price,
+            Availability: data.val().Availability,
+            BuyOrSell: data.val().BuyOrSell,
+            Key: data.key,
+            User: data.val().User
+          }
+        }
     		items.push(item);
     		// this.setState({BuyItems: items});
         counter = counter + 1;
@@ -57,7 +76,6 @@ class Home extends Component {
         if(counter === numChildren){
           this.setState({
             BuyItems: items.sort((a, b) => {
-              console.log("INCR");
               return a.Price - b.Price;
             })
           })
@@ -71,16 +89,34 @@ class Home extends Component {
       let numChildren = snap.numChildren();
 
       snap.forEach((data) => {
-        let item = {
-          Title: data.val().Title,
-          Pics: data.val().Pics,
-          PostedDate: data.val().PostedDate,
-          Price: data.val().Price,
-          Availability: data.val().Availability,
-          Buy: data.val().Buy,
-          Key: data.key,
-          User: data.val().User
+        let item = [];
+        if(data.val().Pics === null || data.val().Pics === undefined || data.val().Pics === []){
+          item = {
+            Title: data.val().Title,
+            Pics: data.val().Pics,
+            PostedDate: data.val().PostedDate,
+            Price: data.val().Price,
+            Availability: data.val().Availability,
+            BuyOrSell: data.val().BuyOrSell,
+            Key: data.key,
+            User: data.val().User
+          }
+        } else {
+          item = {
+            Title: data.val().Title,
+            Pics: Object.keys(data.val().Pics).map((key) => {
+              return data.val().Pics[key]
+            }),
+            PostedDate: data.val().PostedDate,
+            Price: data.val().Price,
+            Availability: data.val().Availability,
+            BuyOrSell: data.val().BuyOrSell,
+            Key: data.key,
+            User: data.val().User
+          }
         }
+
+        
         items.push(item);
         this.setState({SellItems: items});
         // console.log(data.val());
@@ -124,8 +160,15 @@ class Home extends Component {
     })
   }
 
+  handleSortDate(e){
+    console.log(e.target.value);
+    this.setState({
+      SortDate: e.target.value
+    })
+  }
 
   render(){
+    console.log(this.state.BuyItems);
     // console.log(this.state.BuyItems);
     // console.log(this.state.SellItems);
     // console.log(firebase.auth().currentUser);
@@ -138,7 +181,12 @@ class Home extends Component {
             <Input type="radio" label="Decreasing" value="Decreasing" checked={this.state.SortPrice === 'Decreasing'} onChange={this.handleSortPrice}/>
           </Row>
 
-          
+          <Row>
+            <Input type="radio" label="Any Time" value="AnyTime" checked={this.state.SortDate ==='AnyTime'}  onChange={this.handleSortDate}/>
+            <Input type="radio" label="Today" value="Today" checked={this.state.SortDate === 'Today'} onChange={this.handleSortDate}/>
+            <Input type="radio" label="This Week" value="ThisWeek" checked={this.state.SortDate ==='ThisWeek'}  onChange={this.handleSortDate}/>
+            <Input type="radio" label="This Month" value="ThisMonth" checked={this.state.SortDate === 'ThisMonth'} onChange={this.handleSortDate}/>
+          </Row>
         </Col>
 
         <Col s={10}>
@@ -155,76 +203,3 @@ class Home extends Component {
 }
 
 export default Home;
-
-
-
-
-
-
-// <div>
-//             <Col s={4} m={4}></Col>
-//             <Col s={4} m={4}>
-//               <Row>
-//                 <Input type="radio" label="Buy" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/>  
-//                 <Input type="radio" label="Sell" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> 
-//               </Row>
-//               {this.state.BuyOrSell}
-
-//             </Col>
-//             <Col s={4} m={4}></Col>
-//           </div>
-
-
-
-
-
-// <ButtonGroup type="radio" name="options" defaultValue={1} className="BuySellButton">
-//                   <Button value={1} className="Testing"> Buy </Button>
-//                   <Button value={2}>Sell</Button>
-//                 </ButtonGroup>
-
-
-
-
-
-// HUH??
-
-// {this.state.items.map((content, i) => 
-//             <Content key = {i} contentData = {content} />
-//           )}
-
-// class Content extends Component{
-// 	render(){
-//     var BuyOrSell = "Buy";
-
-// 		return (
-// 			<ul>
-// 				<li> <Link to={"Detail/" + BuyOrSell + "/" +this.props.contentData.Key} > {this.props.contentData.Title} </Link></li>
-// 				<li> {this.props.contentData.Price}</li>
-// 				<li> <UncontrolledCarousel Pics={this.props.contentData.Pics}/>
-//         </li>
-// 				<li> {this.props.contentData.PostedDate} </li>
-// 				<li> {this.props.contentData.Availability} </li>
-//         <li> {this.props.contentData.Key} </li>
-// 			</ul>
-// 		)
-// 	}
-// }
-
-
-
-// <Content key = {i} contentData = {content} />
-
-
-
-
-
-// {this.state.items.map((content, i) => 
-//             <ul key={i}>
-//               <li> {content.Title}</li>
-//               <li> {content.Price}</li>
-//               <li> <img src={content.Pics} onError={(e)=>{console.log("KKK"); e.target.src={NoImageIcon}}}/></li>
-//               <li> {content.PostedDate} </li>
-//               <li> {content.Availability} </li>
-//             </ul>
-//           )}

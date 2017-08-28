@@ -17,6 +17,7 @@ class EditPost extends Component{
 
       Title: '',
       Pics: [],
+      NewPics: [],
       PostedDate: '',
       Price: '',
       Availability: '',
@@ -45,26 +46,42 @@ class EditPost extends Component{
       ItemKey: itemKey
     });
 
-    const itemRef = firebase.database().ref().child(BuyOrSell).child(itemKey);
-    // console.log(itemRef);
+    const dbRef = firebase.database().ref().child(BuyOrSell).child(itemKey);
 
-    itemRef.on("value", (snap) => {
+    dbRef.on("value", (snap) => {
       // console.log(snap.val().Title);
       // snap.forEach((data) => {
       //   console.log(data.val());
       // })
       if(snap.val() !== null){
-        this.setState({
-          Title:snap.val().Title,
-          Pics: snap.val().Pics,
-          PostedDate:snap.val().PostedDate,
-          Price: snap.val().Price,
-          Availability:snap.val().Availability,
-          Buy:snap.val().Buy,
-          Key:snap.key,
-          User: snap.val().User,
-          Comment: snap.val().Comment
-        })
+        if (snap.val().Pics === null || snap.val().Pics === undefined || snap.val().Pics === []){
+          this.setState({
+            Title:snap.val().Title,
+            Pics: snap.val().Pics,
+            PostedDate:snap.val().PostedDate,
+            Price: snap.val().Price,
+            Availability:snap.val().Availability,
+            Buy:snap.val().Buy,
+            Key:snap.key,
+            User: snap.val().User,
+            OldComment: snap.val().Comment
+          })
+        } else {
+          this.setState({
+            Title:snap.val().Title,
+            Pics:Object.keys(snap.val().Pics).map((key) => {
+              console.log(key);
+              return snap.val().Pics[key]
+            }),
+            PostedDate:snap.val().PostedDate,
+            Price: snap.val().Price,
+            Availability:snap.val().Availability,
+            Buy:snap.val().Buy,
+            Key:snap.key,
+            User: snap.val().User,
+            OldComment: snap.val().Comment
+          })
+        }
 
       }
     })
@@ -79,6 +96,8 @@ class EditPost extends Component{
     const itemKey = usefulStr[1];
     console.log(BuyOrSell);
     console.log(itemKey);
+
+    console.log(this.state.Pics);
 
     // const rootRef = firebase.database().ref().child(this.state.BuyOrSell);
 
@@ -142,7 +161,6 @@ class EditPost extends Component{
       this.setState({
         Pics: this.state.Pics
       });
-      console.log(this.state.Pics.length);
     }
     if( pic != null){
       reader.readAsDataURL(pic);
@@ -166,10 +184,10 @@ class EditPost extends Component{
       }
     }
     console.log(newSetOfPictures);
-
     this.setState({
       Pics: newSetOfPictures
     })
+
 
 
     // this.setState({
@@ -231,19 +249,27 @@ class EditPost extends Component{
               <Link to="/"> <Button onClick={this.cancel}>Cancel</Button></Link>
           </div>
 
-          <div>
-            PREVIEW OF IMAGES BELOW (CLICK ON THE IMAGES TO REMOVE THEM)
-          </div>
+          
 
-          <Row>
-
-            {Object.keys(this.state.Pics).map((key, i) => 
-              <Col s={12} m={6} l={4} key={i}>
-                <Card header={<CardTitle image={this.state.Pics[key]}/>} onClick={this.deletePic}>
-                </Card>
-              </Col>
-            )}
-          </Row>
+            {this.state.Pics !== undefined && this.state.Pics !== null ? 
+              (
+                <Row>
+                  <div>
+                    PREVIEW OF IMAGES BELOW (CLICK ON THE IMAGES TO REMOVE THEM)
+                  </div>
+                  {this.state.Pics.map((pic, i) => 
+                    <Col s={12} m={6} l={4} key={i}>
+                      <Card header={<CardTitle image={pic}/>} onClick={this.deletePic}>
+                      </Card>
+                    </Col>
+                  )}
+                  </Row>
+              ): ( 
+                <div>
+                </div>
+              )
+            }
+            
         </div>
       </div>
     )
