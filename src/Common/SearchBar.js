@@ -65,13 +65,6 @@ class SearchBar extends Component{
     }
   }
 
-  // componentDidMount(){
-  //   this.setState({
-  //     BuyItems: this.props.BuyItems,
-  //     SellItems: this.props.SellItems
-  //   })
-  // }
-
   handleBuyOrSell(event){
     this.setState({
       BuyOrSell: event.target.value,

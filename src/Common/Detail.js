@@ -116,6 +116,10 @@ class Detail extends Component{
       return <Redirect to="/" />
     }
     console.log(this.state);
+    let currTime = new Date();
+    let time = new Date(this.state.PostedDate);
+    console.log(currTime);
+    console.log(time);
     return(
       <div>
         {(firebase.auth().currentUser !== null) && (firebase.auth().currentUser.email === this.state.User) ? 

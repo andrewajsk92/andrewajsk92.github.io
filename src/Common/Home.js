@@ -20,6 +20,7 @@ class Home extends Component {
 	constructor(props){
     super(props);
     this.state = {
+      items: [],
     	BuyItems: [],
       SellItems: [],
 
@@ -126,7 +127,6 @@ class Home extends Component {
         if(counter === numChildren){
           this.setState({
             SellItems: items.sort((a, b) => {
-              console.log("INCR");
               return a.Price - b.Price;
             })
           })
@@ -161,14 +161,27 @@ class Home extends Component {
   }
 
   handleSortDate(e){
+    let currTime = new Date();
+    var ONE_DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
     console.log(e.target.value);
     this.setState({
       SortDate: e.target.value
     })
+    if(e.target.value === "AnyTime"){
+    } else if(e.target.value === "Today") {
+      let timeLimit = currTime - ONE_DAY_IN_MILLIS;
+      this.setState({
+        items: this.state.BuyItems.filter((item) => {
+          let PostedDate = new Date(item.PostedDate);
+          return PostedDate >= timeLimit;
+        })
+      })
+    }
   }
 
   render(){
-    console.log(this.state.BuyItems);
+
+    console.log(this.state.items);
     // console.log(this.state.BuyItems);
     // console.log(this.state.SellItems);
     // console.log(firebase.auth().currentUser);
