@@ -17,8 +17,7 @@ class SearchBar extends Component{
     super(props);
     this.state = {
       items: [],
-      BuyItems: [],
-      SellItems: [],
+      unfilteredItems: [],
       BuyOrSell: 'Buy',
 
       searchKeyword: ''
@@ -26,18 +25,15 @@ class SearchBar extends Component{
 
     this.filterList = this.filterList.bind(this);
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
-    this.handleBuyOrSell = this.handleBuyOrSell.bind(this);
   }
 
   filterList(event){
     this.setState({
       searchKeyword: event.target.value
     })
-    if(this.state.BuyOrSell === 'Buy'){
-      var updatedList = this.state.BuyItems;
-    } else {
-      updatedList = this.state.SellItems;
-    }
+    
+    var updatedList = this.state.unfilteredItems;
+    
     // var updatedList = this.state.items;
     updatedList = updatedList.filter((item) => {
       return item.Title.toLowerCase().search(
@@ -50,48 +46,13 @@ class SearchBar extends Component{
     // console.log("PROPS CHANGED WTF MAN");
     // console.log(nextProps);
     // console.log(this.props.items);
-    if(this.state.BuyOrSell === 'Buy'){
-      this.setState({
-        BuyItems: nextProps.BuyItems,
-        SellItems: nextProps.SellItems,
-        items: nextProps.BuyItems
-      })
-    } else {
-      this.setState({
-        BuyItems: nextProps.BuyItems,
-        SellItems: nextProps.SellItems,
-        items: nextProps.SellItems
-      })
-    }
-  }
-
-  handleBuyOrSell(event){
     this.setState({
-      BuyOrSell: event.target.value,
-    });
-
-    if(event.target.value === 'Buy'){
-      this.setState({
-        items: this.state.BuyItems
-      })
-    } else{
-      this.setState({
-        items: this.state.SellItems
-      })
-    }
-
-    if(event.target.value === 'Buy'){
-      var updatedList = this.state.BuyItems;
-    } else {
-      updatedList = this.state.SellItems;
-    }
-    updatedList = updatedList.filter((item) => {
-      return item.Title.toLowerCase().search(
-        this.state.searchKeyword.toLowerCase()) !== -1;
-    });
-    this.setState({items: updatedList});
-
+      unfilteredItems: nextProps.items,
+      BuyOrSell: nextProps.BuyOrSell,
+      items: nextProps.items
+    })
   }
+
 
 
   render(){
@@ -112,8 +73,8 @@ class SearchBar extends Component{
           <Col s={4} m={4}>
             <Row>
               <Col>I am...</Col>
-              <Input type="radio" label="Buying" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/>  
-              <Input type="radio" label="Selling" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> 
+              <Input type="radio" label="Buying" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.props.handleBuyOrSell}/>  
+              <Input type="radio" label="Selling" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.props.handleBuyOrSell}/> 
             </Row>
 
           </Col>

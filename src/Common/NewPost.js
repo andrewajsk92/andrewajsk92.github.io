@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import { Button} from 'react-materialize';
+import { Button, Row, Col, Card, CardTitle} from 'react-materialize';
 import { Link, Redirect } from 'react-router-dom';
 import * as firebase from 'firebase';
 
@@ -16,12 +16,17 @@ class NewPost extends Component{
       User: '',
       Comment: '',
 
+      ImagePreviewUrl: [],
+
       redirect: false
     }
     this.handleChangeTitle = this.handleChangeTitle.bind(this);
     this.handleChangePrice = this.handleChangePrice.bind(this);
     this.handleChangeImage = this.handleChangeImage.bind(this);
     this.handleBuyOrSell = this.handleBuyOrSell.bind(this);
+    this.cancel = this.cancel.bind(this);
+
+    this.deletePic = this.deletePic.bind(this);
 
     this.addPost = this.addPost.bind(this);
 
@@ -92,11 +97,12 @@ class NewPost extends Component{
 
     reader.onloadend = () => {
       this.state.Pics.push(pic);
+      this.state.ImagePreviewUrl.push(reader.result);
       this.setState({
         Pics: this.state.Pics,
-        imagePreviewUrl: reader.result
+        ImagePreviewUrl: this.state.ImagePreviewUrl
       });
-      console.log(this.state.Pics.length);
+      // console.log(this.state.Pics.length);
 
     }
     if( pic != null){
@@ -111,23 +117,39 @@ class NewPost extends Component{
   }
 
   cancel(){
-    console.log("HMM");
+    this.setState({
+      redirect: true
+    });
+  }
+
+  deletePic(e){
+    // console.log(e.target);
+
+    let newPic = [];
+    let newImagePreviewUrl = [];
+
+    for(let i = 0 ; i < this.state.ImagePreviewUrl.length ; i++){
+      if(this.state.ImagePreviewUrl[i] !== e.target.src) {
+        newPic.push(this.state.Pics[i]);
+        newImagePreviewUrl.push(this.state.ImagePreviewUrl[i]);
+      }
+    }
+
+    this.setState({
+      Pics: newPic,
+      ImagePreviewUrl: newImagePreviewUrl
+    })
   }
 
   render(){
-    let {imagePreviewUrl} = this.state;
-    let $imagePreview = null;
-    if (imagePreviewUrl) {
-      $imagePreview = (<img src={imagePreviewUrl} alt="NO"/>);
-    } else {
-      $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
-    }
 
     if(this.state.redirect === true){
       return <Redirect to="/" />
     }
 
-    console.log(this.state.BuyOrSell);
+    // console.log(this.state.BuyOrSell);
+    console.log(this.state.Pics);
+    console.log(this.state.ImagePreviewUrl);
     return(
       <div>
         <form onSubmit={this.addPost}>
@@ -157,10 +179,25 @@ class NewPost extends Component{
                 <Link to="/"> <Button onClick={this.cancel}>Cancel</Button></Link>
             </div>
 
-            <div className="imgPreview">
-              {$imagePreview}
-            </div>
-
+            
+            {this.state.Pics !== undefined && this.state.Pics !== null ? 
+              (
+                <Row>
+                  <div>
+                    PREVIEW OF IMAGES BELOW (CLICK ON THE IMAGES TO REMOVE THEM)
+                  </div>
+                  {this.state.ImagePreviewUrl.map((pic, i) => 
+                    <Col s={12} m={6} l={4} key={i}>
+                      <Card header={<CardTitle image={pic}/>} onClick={this.deletePic}>
+                      </Card>
+                    </Col>
+                  )}
+                  </Row>
+              ): ( 
+                <div>
+                </div>
+              )
+            }
           </div>
         </form>
       </div>

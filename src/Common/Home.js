@@ -23,13 +23,16 @@ class Home extends Component {
       items: [],
     	BuyItems: [],
       SellItems: [],
+      BuyOrSell: 'Buy',
 
       SortPrice: 'Increasing',
       SortDate: 'AnyTime'
     }
+    this.componentDidMount = this.componentDidMount.bind(this);
+
     this.handleSortPrice = this.handleSortPrice.bind(this);
     this.handleSortDate = this.handleSortDate.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleBuyOrSell = this.handleBuyOrSell.bind(this);
 
   }
 
@@ -77,6 +80,9 @@ class Home extends Component {
         if(counter === numChildren){
           this.setState({
             BuyItems: items.sort((a, b) => {
+              return a.Price - b.Price;
+            }),
+            items: items.sort((a, b) => {
               return a.Price - b.Price;
             })
           })
@@ -156,6 +162,16 @@ class Home extends Component {
         } else {
           return b.Price - a.Price;
         }
+      }),
+
+      items: this.state.items.sort((a, b) => {
+        if(e.target.value === 'Increasing'){ 
+          console.log("INCR");
+          return a.Price - b.Price;
+        } else {
+          console.log("DECR");
+          return b.Price - a.Price;
+        }
       })
     })
   }
@@ -168,20 +184,101 @@ class Home extends Component {
       SortDate: e.target.value
     })
     if(e.target.value === "AnyTime"){
+      if(this.state.BuyOrSell === "Buy"){
+        this.setState({
+          items: this.state.BuyItems
+        })
+      } else {
+        this.setState({
+          items: this.state.SellItems
+        })
+      }
     } else if(e.target.value === "Today") {
       let timeLimit = currTime - ONE_DAY_IN_MILLIS;
-      this.setState({
-        items: this.state.BuyItems.filter((item) => {
-          let PostedDate = new Date(item.PostedDate);
-          return PostedDate >= timeLimit;
+      if(this.state.BuyOrSell === "Buy"){
+        this.setState({
+          items: this.state.BuyItems.filter((item) => {
+            let PostedDate = new Date(item.PostedDate);
+            return PostedDate >= timeLimit;
+          })
         })
+      } else {
+        this.setState({
+          items: this.state.SellItems.filter((item) => {
+            let PostedDate = new Date(item.PostedDate);
+            return PostedDate >= timeLimit;
+          })
+        })
+      }
+    } else if (e.target.value === "ThisWeek") {
+      let timeLimit = currTime - 7 * ONE_DAY_IN_MILLIS;
+      if(this.state.BuyOrSell === "Buy"){
+        this.setState({
+          items: this.state.BuyItems.filter((item) => {
+            let PostedDate = new Date(item.PostedDate);
+            return PostedDate >= timeLimit;
+          })
+        })
+      } else {
+        this.setState({
+          items: this.state.SellItems.filter((item) => {
+            let PostedDate = new Date(item.PostedDate);
+            return PostedDate >= timeLimit;
+          })
+        })
+      }
+    } else if (e.target.value ==="ThisMonth") {
+      let timeLimit = currTime - 31 * ONE_DAY_IN_MILLIS;
+      if(this.state.BuyOrSell === "Buy"){
+        this.setState({
+          items: this.state.BuyItems.filter((item) => {
+            let PostedDate = new Date(item.PostedDate);
+            return PostedDate >= timeLimit;
+          })
+        })
+      } else {
+        this.setState({
+          items: this.state.SellItems.filter((item) => {
+            let PostedDate = new Date(item.PostedDate);
+            return PostedDate >= timeLimit;
+          })
+        })
+      }
+    }
+  }
+
+
+  handleBuyOrSell(event){
+    this.setState({
+      BuyOrSell: event.target.value,
+    });
+
+    if(event.target.value === 'Buy'){
+      this.setState({
+        items: this.state.BuyItems
+      })
+    } else{
+      this.setState({
+        items: this.state.SellItems
       })
     }
+
+    // if(event.target.value === 'Buy'){
+    //   var updatedList = this.state.BuyItems;
+    // } else {
+    //   updatedList = this.state.SellItems;
+    // }
+    // updatedList = updatedList.filter((item) => {
+    //   return item.Title.toLowerCase().search(
+    //     this.state.searchKeyword.toLowerCase()) !== -1;
+    // });
+    // this.setState({items: updatedList});
+
   }
 
   render(){
 
-    console.log(this.state.items);
+    // console.log(this.state.items);
     // console.log(this.state.BuyItems);
     // console.log(this.state.SellItems);
     // console.log(firebase.auth().currentUser);
@@ -206,7 +303,7 @@ class Home extends Component {
           {firebase.auth().currentUser !== null ? (<Link to="/NewPost" ><Button>New Post</Button></Link>) : ('')}
 
           <div>
-            <SearchBar BuyItems={this.state.BuyItems} SellItems={this.state.SellItems}/>
+            <SearchBar items={this.state.items} BuyOrSell={this.state.BuyOrSell} handleBuyOrSell={this.handleBuyOrSell}/>
           </div>
      
         </Col>
