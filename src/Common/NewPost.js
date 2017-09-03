@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import { Button, Row, Col, Card, CardTitle} from 'react-materialize';
+import { Button, Row, Col, Card, CardTitle, Input} from 'react-materialize';
 import { Link, Redirect } from 'react-router-dom';
 import * as firebase from 'firebase';
 
@@ -18,11 +18,14 @@ class NewPost extends Component{
 
       ImagePreviewUrl: [],
 
+      Description: '',
+
       redirect: false
     }
     this.handleChangeTitle = this.handleChangeTitle.bind(this);
     this.handleChangePrice = this.handleChangePrice.bind(this);
     this.handleChangeImage = this.handleChangeImage.bind(this);
+    this.handleChangeDescription = this.handleChangeDescription.bind(this);
     this.handleBuyOrSell = this.handleBuyOrSell.bind(this);
     this.cancel = this.cancel.bind(this);
 
@@ -45,7 +48,8 @@ class NewPost extends Component{
       BuyOrSell: this.state.BuyOrSell,
       User: firebase.auth().currentUser.email,
       Pics: [],
-      Comment: ''
+      Comment: '',
+      Description: this.state.Description
     }
     const newlyAddedItem = rootRef.push(item);
     console.log(newlyAddedItem.key);
@@ -81,12 +85,14 @@ class NewPost extends Component{
 
   handleChangeTitle(event){
     this.setState({Title: event.target.value});
-    console.log("TITLE DONE");
   }
 
   handleChangePrice(event){
     this.setState({Price: event.target.value});
-    console.log("PRICE DONE");
+  }
+
+  handleChangeDescription(event){
+    this.setState({Description: event.target.value});
   }
 
   handleChangeImage(e) {
@@ -161,12 +167,17 @@ class NewPost extends Component{
 
             <div>
               <label><b>Desirable Price*</b></label>
-              <input type="text" pattern="[0-9]*" placeholder="Enter Password" id="price" name="password" value={this.state.Price} onChange={this.handleChangePrice} required/>
+              <input type="text" pattern="[0-9]*" placeholder="Enter Price" id="price" name="password" value={this.state.Price} onChange={this.handleChangePrice} required/>
             </div>
 
             <div>
-              <label> <input type="radio" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/> Buy </label>
-              <label> <input type="radio" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> Sell </label>
+              <Input type="radio" label="Buy" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/>
+              <Input type="radio" label="Sell" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/>
+            </div>
+
+            <div>
+              <label><b>Description</b></label>
+              <input type="text" placeholder="Enter a brief description" value={this.state.Description} onChange={this.handleChangeDescription}/>
             </div>
 
             <div>

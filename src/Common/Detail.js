@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 
-import {Button, Input} from 'react-materialize';
+import {Button, Input, Row, Col} from 'react-materialize';
 // import Hamster from './Hamster.jpg';
 import { Link, Redirect } from 'react-router-dom';
 
@@ -64,7 +64,8 @@ class Detail extends Component{
             Buy:snap.val().Buy,
             Key:snap.key,
             User: snap.val().User,
-            OldComment: snap.val().Comment
+            OldComment: snap.val().Comment,
+            Description: snap.val().Description
           })
         } else {
           this.setState({
@@ -79,7 +80,8 @@ class Detail extends Component{
             Buy:snap.val().Buy,
             Key:snap.key,
             User: snap.val().User,
-            OldComment: snap.val().Comment
+            OldComment: snap.val().Comment,
+            Description: snap.val().Description
           })
         }
       }
@@ -109,111 +111,123 @@ class Detail extends Component{
   }
 
   render(){
-    console.log(this.state);
+    console.log(this.state.OldComment);
     // console.log(this.state.Pics);
     // console.log(Object.values(this.state.Pics));
     if(this.state.redirect === true){
       return <Redirect to="/" />
     }
-    console.log(this.state);
-    let currTime = new Date();
-    let time = new Date(this.state.PostedDate);
-    console.log(currTime);
-    console.log(time);
     return(
       <div>
-        {(firebase.auth().currentUser !== null) && (firebase.auth().currentUser.email === this.state.User) ? 
-          (
-            <div>
-              <Link to={"/EditPost/" + this.state.BuyOrSell +"/" + this.state.ItemKey} ><Button>Edit</Button></Link>
-              <Button onClick={this.sold}> Sold </Button>
-              <Button onClick={this.delete}>Delete</Button>
-            </div>
-          ) : (
-            <div>
-              <Button> Let's Meet Up! </Button>
-            </div>
-          )
-        }
-        
-
-        <div>
-          {this.state.Title}
-        </div>
-
-        {(firebase.auth().currentUser !== null) && (firebase.auth().currentUser.email === this.state.User) ? 
-          (
-            <div>
-              {this.state.User}
-            </div>
-          ) : (
-            <div>
-              <a href={"mailto:" +this.state.User}> {this.state.User} </a>
-            </div>
-          )
-        }
-        <div>
-          {this.state.PostedDate}
-        </div>
-
-        <div>
-          {this.state.Price}
-        </div>
-
-        <div>
-          {this.state.Availability ? "good to go": "fuckk off"}
-        </div>
-
-        <div>
-          {this.state.Buy ? "buying" : "selling"}
-        </div>
-
-        <div>
-          <DetailCarousel Pics={this.state.Pics}/>
-        </div>
-
-
-        <div>
-          <Link to="/"> Go Back </Link>
-        </div>
-
-        <div>
-          <Map 
-            center={{lat:40.728199, lng:-73.9894738}}
-            zoom={16}
-            containerElement={<div style={{height:400, width:400}} />} 
-            mapElement={<div style={{height:400, width:400}} />}/>
-        </div>
-
-        <div>
-          <form onSubmit={this.addComment.bind(this)}>
-            <Input label="Comment" placeholder="HI" value={this.state.Comment} onChange={this.handleChangeComment.bind(this)}/>
-            <Button type="submit"> Button </Button>
-          </form>
-        </div>
-
-        <div>
-          {this.state.OldComment === undefined || this.state.OldComment === null ?
+        <br />
+        <Row>
+          {(firebase.auth().currentUser !== null) && (firebase.auth().currentUser.email === this.state.User) ? 
             (
-              <div>
-                NO COMMENT
-              </div>
+              <Col s={7}>
+                <Link to={"/EditPost/" + this.state.BuyOrSell +"/" + this.state.ItemKey} ><Button>Edit</Button></Link>
+                <Button onClick={this.sold}> Sold </Button>
+                <Button onClick={this.delete}>Delete</Button>
+              </Col>
             ) : (
-              <div>
-                {Object.keys(this.state.OldComment).map((comment, i) => 
-                  <div key={i}>
-                    {this.state.OldComment[comment].Comment}
-                    <div style={{paddingLeft:20 }}>
-                      Posted by {this.state.OldComment[comment].Commentor}
-                    </div>
-                  </div>
-                )}
-              </div>
+              <Col s={7}>
+                <Button> Let's Meet Up! </Button>
+              </Col>
             )
           }
-          
-        </div>
 
+
+          <Col s={1} offset="s3">
+            <Link to="/"> <Button className="red darken-2">Go Back</Button> </Link>
+          </Col>
+        </Row>
+        
+        <Row>
+          <Col s={5}>
+            <div>
+              <DetailCarousel Pics={this.state.Pics}/>
+            </div>
+
+            <br />
+
+            <div>
+              <Map 
+                center={{lat:40.728199, lng:-73.9894738}}
+                zoom={16}
+                containerElement={<div style={{height:400, width:400}} />} 
+                mapElement={<div style={{height:400, width:400}} />}/>
+            </div>
+          </Col>
+
+          <Col s={7}>
+            <h3>
+              {this.state.Title}
+            </h3>
+
+            <div>
+              ${this.state.Price}
+            </div>
+
+            {(firebase.auth().currentUser !== null) && (firebase.auth().currentUser.email === this.state.User) ? 
+              (
+                <div>
+                  {this.state.User}
+                </div>
+              ) : (
+                <div>
+                  <a href={"mailto:" +this.state.User}> {this.state.User} </a>
+                </div>
+              )
+            }
+            <div>
+              {this.state.PostedDate}
+            </div>
+
+            <div>
+              {this.state.Availability ? "good to go": "fuckk off"}
+            </div>
+
+            <div>
+              {this.state.BuyOrSell === "Buy" ? "Buy" : "Sell"}
+            </div>
+
+            <div>
+              {this.state.Description}
+            </div>
+
+            <div>
+              <form onSubmit={this.addComment.bind(this)}>
+                <Row>
+                  <Input s={12} label="Comment" value={this.state.Comment} onChange={this.handleChangeComment.bind(this)}/>
+                </Row>
+                <div>
+                  <Button type="submit"> Submit Comment </Button>
+                </div>
+              </form>
+            </div>
+
+            <div>
+              {this.state.OldComment === undefined || this.state.OldComment === null || this.state.OldComment === "" ?
+                (
+                  <div>
+                    NO COMMENT
+                  </div>
+                ) : (
+                  <div>
+                    {Object.keys(this.state.OldComment).map((comment, i) => 
+                      <div key={i}>
+                        {this.state.OldComment[comment].Comment}
+                        <div style={{paddingLeft:20 }}>
+                          Posted by {this.state.OldComment[comment].Commentor}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )
+              }
+              
+            </div>
+          </Col>
+        </Row>
       </div>
     )
   }

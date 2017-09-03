@@ -57,7 +57,8 @@ class Home extends Component {
       			Availability: data.val().Availability,
             BuyOrSell: data.val().BuyOrSell,
             Key: data.key,
-            User: data.val().User
+            User: data.val().User,
+            Description: data.val().Description
       		}
         } else{
           item = {
@@ -70,7 +71,8 @@ class Home extends Component {
             Availability: data.val().Availability,
             BuyOrSell: data.val().BuyOrSell,
             Key: data.key,
-            User: data.val().User
+            User: data.val().User,
+            Description: data.val().Description
           }
         }
     		items.push(item);
@@ -106,7 +108,8 @@ class Home extends Component {
             Availability: data.val().Availability,
             BuyOrSell: data.val().BuyOrSell,
             Key: data.key,
-            User: data.val().User
+            User: data.val().User,
+            Description: data.val().Description
           }
         } else {
           item = {
@@ -119,7 +122,8 @@ class Home extends Component {
             Availability: data.val().Availability,
             BuyOrSell: data.val().BuyOrSell,
             Key: data.key,
-            User: data.val().User
+            User: data.val().User,
+            Description: data.val().Description
           }
         }
 

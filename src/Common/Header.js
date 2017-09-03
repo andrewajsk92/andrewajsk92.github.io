@@ -77,7 +77,7 @@ class App extends Component{
         
           {this.state.currentUser === null ? 
             (
-              <Navbar brand="Buy and Sell" right>
+              <Navbar className="green lighten-2" brand="Buy and Sell" right>
                 <li><NavLink to="/">  Home  </NavLink> </li>
                 <li><NavLink to="/about"> About </NavLink> </li>
                 <li><NavLink to="/SignIn"> Log In </NavLink> </li>
@@ -86,18 +86,18 @@ class App extends Component{
 
               
             ) :(
-              <Navbar brand="Buy and Sell" right>
+              <Navbar className="green lighten-2" brand="Buy and Sell" right>
                 <li><NavLink to="/">  Home  </NavLink> </li>
                 <li><NavLink to="/about"> About </NavLink> </li>
-                <label>Hello, {this.state.currentUser.email} </label>
+                <li><b> Hello, {this.state.currentUser.email} </b> </li>
                 <li> <NavLink to="/" onClick={this.signOut}> Sign Out </NavLink> </li>
                 <Dropdown trigger={
-                  <Button>Drop me!</Button>
+                  <Button className="green lighten-3">More Options!</Button>
                   }>
-                  <NavItem>one</NavItem>
-                  <NavItem>two</NavItem>
+                  <NavItem>Privacy</NavItem>
+                  <NavItem>Settings</NavItem>
                   <NavItem divider />
-                  <NavItem>three</NavItem>
+                  <NavItem>What should this be</NavItem>
                 </Dropdown>
               </Navbar>
             )

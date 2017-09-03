@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {Button, Row, Col, Card, CardTitle} from 'react-materialize';
+import {Button, Row, Col, Card, CardTitle, Input} from 'react-materialize';
 import { Link, Redirect } from 'react-router-dom';
 
 
@@ -24,12 +24,17 @@ class EditPost extends Component{
       Buy: '',
       Key: '',
       User: '',
-      Comment: ''
+      Comment: '',
+      Description: '',
+
+      redirect: false
     }; 
     this.handleChangeTitle = this.handleChangeTitle.bind(this);
     this.handleChangePrice = this.handleChangePrice.bind(this);
     this.handleChangeImage = this.handleChangeImage.bind(this);
     this.handleBuyOrSell = this.handleBuyOrSell.bind(this);
+    this.handleChangeDescription = this.handleChangeDescription.bind(this);
+
     this.deletePic = this.deletePic.bind(this);
 
     this.editPost = this.editPost.bind(this);
@@ -64,7 +69,8 @@ class EditPost extends Component{
             Buy:snap.val().Buy,
             Key:snap.key,
             User: snap.val().User,
-            OldComment: snap.val().Comment
+            OldComment: snap.val().Comment,
+            Description: snap.val().Description
           })
         } else {
           this.setState({
@@ -79,7 +85,8 @@ class EditPost extends Component{
             Buy:snap.val().Buy,
             Key:snap.key,
             User: snap.val().User,
-            OldComment: snap.val().Comment
+            OldComment: snap.val().Comment,
+            Description: snap.val().Description
           })
         }
 
@@ -99,20 +106,21 @@ class EditPost extends Component{
 
     console.log(this.state.Pics);
 
-    // const rootRef = firebase.database().ref().child(this.state.BuyOrSell);
 
-    // var item = {
-    //   Title: this.state.Title,
-    //   PostedDate: new Date().toDateString(),
-    //   Price: this.state.Price,
-    //   Availability: true,
-    //   BuyOrSell: this.state.BuyOrSell,
-    //   User: firebase.auth().currentUser.email,
-    //   Pics: [],
-    //   Comment: ''
-    // }
-    // const newlyAddedItem = rootRef.push(item);
-    // console.log(newlyAddedItem.key);
+
+    const rootRef = firebase.database().ref().child(this.state.BuyOrSell).child(this.state.ItemKey);
+
+    var item = {
+      Title: this.state.Title,
+      Price: this.state.Price,
+      BuyOrSell: this.state.BuyOrSell,
+      Description: this.state.Description
+    }
+    const newlyAddedItem = rootRef.update(item);
+
+    this.setState({
+      redirect: true
+    })
 
     // if(this.state.Pics !== []){
     //   this.state.Pics.forEach((pic) => {
@@ -147,6 +155,10 @@ class EditPost extends Component{
   handleChangePrice(event){
     this.setState({Price: event.target.value});
     console.log("PRICE DONE");
+  }
+
+  handleChangeDescription(event){
+    this.setState({Description: event.target.value});
   }
 
   handleChangeImage(e) {
@@ -187,19 +199,6 @@ class EditPost extends Component{
     this.setState({
       Pics: newSetOfPictures
     })
-
-
-
-    // this.setState({
-    //   Pics: Object.entries(this.state.Pics).delete(e.target.src);
-    // })
-
-    // this.setState({
-    //   Pics: Object.entries(this.state.Pics).filter((key,value ) => {
-    //     return e.target.src !== value
-    //   })
-    // });
-    // console.log(this.state.Pics);
   }
 
   cancel(){
@@ -235,8 +234,14 @@ class EditPost extends Component{
           </div>
 
           <div>
-            <label> <input type="radio" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/> Buy </label>
-            <label> <input type="radio" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/> Sell </label>
+            <label> <b> People will ______ this item </b></label>
+            <Input type="radio" label="Buy" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.handleBuyOrSell}/>
+            <Input type="radio" label="Sell" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.handleBuyOrSell}/>
+          </div>
+
+          <div>
+            <label><b>Description</b></label>
+            <input type="text" placeholder="Enter a brief description" value={this.state.Description} onChange={this.handleChangeDescription}/>
           </div>
 
           <div>

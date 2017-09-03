@@ -69,16 +69,16 @@ class SearchBar extends Component{
         </form>
 
         <Row>
-          <Col s={4} m={4}></Col>
-          <Col s={4} m={4}>
+          <Col s={1} offset="s3"> <label> <b> I am...</b></label> </Col>
+          <Col s={4}>
+            
             <Row>
-              <Col>I am...</Col>
               <Input type="radio" label="Buying" value="Buy" checked={this.state.BuyOrSell ==='Buy'}  onChange={this.props.handleBuyOrSell}/>  
               <Input type="radio" label="Selling" value="Sell" checked={this.state.BuyOrSell === 'Sell'} onChange={this.props.handleBuyOrSell}/> 
             </Row>
 
           </Col>
-          <Col s={4} m={4}></Col>
+          <Col s={4}></Col>
         </Row>
 
         <Row>
@@ -114,8 +114,8 @@ class Content extends Component{
     return (
       <Card 
         header={<HomeCarousel reveal Pics={this.props.contentData.Pics} Title={this.props.contentData.Title} waves='light'/>}
-        title={<Link to={"Detail/" + this.props.BuyOrSell + "/" +this.props.contentData.Key} > {this.props.contentData.Title} </Link>}
-        reveal={<p>Here is some more information about this product that is only revealed once clicked on.</p>}
+        title={<Link to={"/Detail/" + this.props.BuyOrSell + "/" +this.props.contentData.Key} > {this.props.contentData.Title} </Link>}
+        reveal={<p>{this.props.contentData.Description}</p>}
       >
         <p> {this.props.contentData.User} </p>
         <p>${this.props.contentData.Price} / distance </p>
