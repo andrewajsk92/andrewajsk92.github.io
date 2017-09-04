@@ -13,7 +13,8 @@ class SignUp extends Component{
       password: '',
       passwordConfirm: '',
 
-      redirect: false
+      redirect: false,
+      error: ''
     }
 
     this.addUser = this.addUser.bind(this);
@@ -28,25 +29,45 @@ class SignUp extends Component{
     if(this.state.password === this.state.passwordConfirm){
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch((error) => {
         // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
+        let errorCode = error.code;
+        let errorMessage = error.message;
         // ...
         console.log(errorCode);
         console.log(errorMessage);
-      }).then(() => {
-        console.log ("ADDED");
-        firebase.auth().currentUser.sendEmailVerification().then(function() {
-         // Email sent.
-         console.log("VERIFIED");
-        }, function(error) {
-         // An error happened.
-         console.log("ERROR");
-        });
         this.setState({
-          redirect: true
-        });
+          error: errorMessage
+        })
+      }).then((response) => {
+        if(response === 201){
+          console.log ("ADDED");
+          firebase.auth().currentUser.sendEmailVerification().then((response) => {
+            // Email sent.
+            if(response === 201){
+              console.log("VERIFIED");
+              this.setState({
+                redirect: true,
+                error: ''
+              });
+            }
+          }, (error) => {
+            // An error happened.
+            let errorCode = error.code;
+            let errorMessage = error.message;
+            console.log(errorCode);
+            console.log(errorMessage);
+            this.setState({
+              error: errorMessage
+            })
+            console.log("ERROR");
+          });
+
+        }
+        
       });
     } else{
+      this.setState({
+        error: 'Password does not match with the confirmed password'
+      })
       console.log("PASSWORD MAN");
     }
     
@@ -84,6 +105,10 @@ class SignUp extends Component{
           <div>
             <label><b>Confirm Password* (AT LEAST 6 CHARACTERS)</b></label>
             <input type="password" placeholder="Confirm Password" value={this.state.passwordConfirm} onChange={this.handleChangePasswordConfirm} required/>
+          </div>
+
+          <div className="signInOrUpError">
+            {this.state.error}
           </div>
 
           <div>

@@ -7,8 +7,9 @@ import About from './About'
 import Car from './Car'
 import NewPost from './NewPost'
 import Detail from './Detail'
-import SignIn from './SignIn'
-import SignUp from './SignUp'
+// import SignIn from './SignIn'
+// import SignUp from './SignUp'
+import SignInOrUp from './SignInOrUp'
 import EditPost from './EditPost'
 import PromisePractice from './PromisePractice'
 import VerifyEmail from './VerifyEmail';
@@ -125,22 +126,11 @@ class Main extends Component{
 
             <Route path='/Detail/:BuyOrSell/:itemKey' component={Detail}/>
 
-            <Route path='/SignIn' render={() => 
+            <Route path='/SignInOrUp' render={() => 
               (
                 firebase.auth().currentUser === null ?
                 (
-                  <SignIn />
-                ) : (
-                  <Redirect to ="/" />
-                )
-              )
-            }/>
-
-            <Route path='/SignUp' render={() => 
-              (
-                firebase.auth().currentUser === null ?
-                (
-                  <SignUp />
+                  <SignInOrUp />
                 ) : (
                   <Redirect to ="/" />
                 )

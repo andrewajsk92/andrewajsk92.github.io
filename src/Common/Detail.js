@@ -125,8 +125,8 @@ class Detail extends Component{
             (
               <Col s={7}>
                 <Link to={"/EditPost/" + this.state.BuyOrSell +"/" + this.state.ItemKey} ><Button>Edit</Button></Link>
-                <Button onClick={this.sold}> Sold </Button>
-                <Button onClick={this.delete}>Delete</Button>
+                <Button className="yellow darken-1" onClick={this.sold}> Sold </Button>
+                <Button className="red darken-1" onClick={this.delete}>Delete</Button>
               </Col>
             ) : (
               <Col s={7}>
@@ -137,7 +137,7 @@ class Detail extends Component{
 
 
           <Col s={1} offset="s3">
-            <Link to="/"> <Button className="red darken-2">Go Back</Button> </Link>
+            <Link to="/"> <Button>Go Back</Button> </Link>
           </Col>
         </Row>
         

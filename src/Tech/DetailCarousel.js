@@ -17,15 +17,15 @@ class DetailCarousel extends Component{
     return(
       <div>
         {this.props.Pics !== undefined ? (
-          <Carousel activeIndex={this.state.index} direction={this.state.direction} onSelect={(selectedIndex, e)=>this.setState({index: selectedIndex, direction: e.direction})}>
+          <Carousel  activeIndex={this.state.index} direction={this.state.direction} onSelect={(selectedIndex, e)=>this.setState({index: selectedIndex, direction: e.direction})}>
             {this.props.Pics.map((pic,i) => 
               <Carousel.Item key={i}>
-                <img width={500} height={300} alt="NOT FOUND" src={pic}/>
+                <img className="myCarousel" alt="NOT FOUND" src={pic}/>
               </Carousel.Item>
             )}
           </Carousel>
           ) : (
-            <img src={NoImageIcon} width={500} height={300}/>
+            <img className="noImageIcon" src={NoImageIcon}  />
 
           )
         }

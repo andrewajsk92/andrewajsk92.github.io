@@ -80,8 +80,7 @@ class App extends Component{
               <Navbar className="green lighten-2" brand="Buy and Sell" right>
                 <li><NavLink to="/">  Home  </NavLink> </li>
                 <li><NavLink to="/about"> About </NavLink> </li>
-                <li><NavLink to="/SignIn"> Log In </NavLink> </li>
-                <li><NavLink to="/SignUp"> Sign Up </NavLink> </li>
+                <li><NavLink to="/SignInOrUp"> Sign In/Sign Up</NavLink> </li>
               </Navbar>
 
               
@@ -97,7 +96,7 @@ class App extends Component{
                   <NavItem>Privacy</NavItem>
                   <NavItem>Settings</NavItem>
                   <NavItem divider />
-                  <NavItem>What should this be</NavItem>
+                  <NavItem>My Items</NavItem>
                 </Dropdown>
               </Navbar>
             )

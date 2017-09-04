@@ -15,7 +15,7 @@ class SignIn extends Component{
       email: '',
       password: '',
 
-      redirect: false
+      error: ''
 
     }
     this.signIn = this.signIn.bind(this);
@@ -33,11 +33,18 @@ class SignIn extends Component{
       // ...
       console.log(errorCode);
       console.log(errorMessage);
-    }).then(() => {
-      console.log("DONE");
       this.setState({
-        redirect: true
-      });
+        error: errorMessage
+      })
+    }).then((response) => {
+      console.log("WTF");
+      if(response === 201){
+        console.log("DONE");
+
+        this.setState({
+          error: ''
+        });
+      }
 
     });
   }
@@ -51,10 +58,6 @@ class SignIn extends Component{
   }
 
   render(){
-    if(this.state.redirect === true){
-      return <Redirect to="/" />
-    }
-
     return(
       <div>
 
@@ -67,6 +70,10 @@ class SignIn extends Component{
           <div>
             <label><b>Password</b></label>
             <input type="password" placeholder="Password" value={this.state.password} onChange={this.handleChangePassword} required/>
+          </div>
+
+          <div className="signInOrUpError">
+            {this.state.error}
           </div>
 
           <div>

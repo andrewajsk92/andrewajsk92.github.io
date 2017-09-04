@@ -187,7 +187,7 @@ class NewPost extends Component{
 
             <div>
                 <Button type="submit" value="Submit" >Post</Button>
-                <Link to="/"> <Button onClick={this.cancel}>Cancel</Button></Link>
+                <Link to="/"> <Button className="red darken-1" onClick={this.cancel}>Cancel</Button></Link>
             </div>
 
             
