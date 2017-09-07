@@ -23,7 +23,7 @@ class EditPost extends Component{
       Availability: '',
       Buy: '',
       Key: '',
-      User: '',
+      OriginalPoster: '',
       Comment: '',
       Description: '',
 
@@ -68,7 +68,7 @@ class EditPost extends Component{
             Availability:snap.val().Availability,
             Buy:snap.val().Buy,
             Key:snap.key,
-            User: snap.val().User,
+            OriginalPoster: snap.val().OriginalPoster,
             OldComment: snap.val().Comment,
             Description: snap.val().Description
           })
@@ -84,7 +84,7 @@ class EditPost extends Component{
             Availability:snap.val().Availability,
             Buy:snap.val().Buy,
             Key:snap.key,
-            User: snap.val().User,
+            OriginalPoster: snap.val().OriginalPoster,
             OldComment: snap.val().Comment,
             Description: snap.val().Description
           })

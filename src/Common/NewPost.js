@@ -13,7 +13,7 @@ class NewPost extends Component{
       Price: '',
       Pics: [],
       BuyOrSell: 'Buy',
-      User: '',
+      OriginalPoster: '',
       Comment: '',
 
       ImagePreviewUrl: [],
@@ -46,7 +46,7 @@ class NewPost extends Component{
       Price: this.state.Price,
       Availability: true,
       BuyOrSell: this.state.BuyOrSell,
-      User: firebase.auth().currentUser.email,
+      OriginalPoster: firebase.auth().currentUser.email,
       Pics: [],
       Comment: '',
       Description: this.state.Description

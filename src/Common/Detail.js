@@ -22,6 +22,7 @@ class Detail extends Component{
       ItemKey: '',
 
       Comment: '',
+      currentUser: '',
 
       redirect: false
     }
@@ -35,6 +36,20 @@ class Detail extends Component{
   }
 
   componentDidMount(){
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in.
+        this.setState({
+          currentUser: user
+        })
+      } else {
+        // No user is signed in.
+        this.setState({
+          currentUser: user
+        })
+      }
+    });
+
     const str = window.location.pathname.split('/Detail/');
     const usefulStr = str[1].split("/");
     const BuyOrSell = usefulStr[0];
@@ -63,7 +78,7 @@ class Detail extends Component{
             Availability:snap.val().Availability,
             Buy:snap.val().Buy,
             Key:snap.key,
-            User: snap.val().User,
+            OriginalPoster: snap.val().OriginalPoster,
             OldComment: snap.val().Comment,
             Description: snap.val().Description
           })
@@ -79,7 +94,7 @@ class Detail extends Component{
             Availability:snap.val().Availability,
             Buy:snap.val().Buy,
             Key:snap.key,
-            User: snap.val().User,
+            OriginalPoster: snap.val().OriginalPoster,
             OldComment: snap.val().Comment,
             Description: snap.val().Description
           })
@@ -103,17 +118,18 @@ class Detail extends Component{
 
   addComment(){
     var item = {
-      Commentor: this.state.User,
+      Commentor: this.state.currentUser.email,
       Comment: this.state.Comment,
       SubComment: []
     }
+    console.log(item);
+    console.log(this.state.BuyOrSell);
+    console.log(this.state.ItemKey);
     firebase.database().ref().child(this.state.BuyOrSell).child(this.state.ItemKey).child('Comment').push(item);
   }
 
   render(){
-    console.log(this.state.OldComment);
-    // console.log(this.state.Pics);
-    // console.log(Object.values(this.state.Pics));
+    console.log(this.state.currentUser);
     if(this.state.redirect === true){
       return <Redirect to="/" />
     }
@@ -121,7 +137,7 @@ class Detail extends Component{
       <div>
         <br />
         <Row>
-          {(firebase.auth().currentUser !== null) && (firebase.auth().currentUser.email === this.state.User) ? 
+          {(firebase.auth().currentUser !== null) && (firebase.auth().currentUser.email === this.state.OriginalPoster) ? 
             (
               <Col s={7}>
                 <Link to={"/EditPost/" + this.state.BuyOrSell +"/" + this.state.ItemKey} ><Button>Edit</Button></Link>
@@ -167,14 +183,14 @@ class Detail extends Component{
               ${this.state.Price}
             </div>
 
-            {(firebase.auth().currentUser !== null) && (firebase.auth().currentUser.email === this.state.User) ? 
+            {(firebase.auth().currentUser !== null) && (firebase.auth().currentUser.email === this.state.OriginalPoster) ? 
               (
                 <div>
-                  {this.state.User}
+                  {this.state.OriginalPoster}
                 </div>
               ) : (
                 <div>
-                  <a href={"mailto:" +this.state.User}> {this.state.User} </a>
+                  <a href={"mailto:" +this.state.OriginalPoster}> {this.state.OriginalPoster} </a>
                 </div>
               )
             }
@@ -194,18 +210,31 @@ class Detail extends Component{
               {this.state.Description}
             </div>
 
-            <div>
-              <form onSubmit={this.addComment.bind(this)}>
-                <Row>
-                  <Input s={12} label="Comment" value={this.state.Comment} onChange={this.handleChangeComment.bind(this)}/>
-                </Row>
-                <div>
-                  <Button type="submit"> Submit Comment </Button>
-                </div>
-              </form>
-            </div>
+            <div className="section"> </div>
+
+            <div className="divider"> </div>
 
             <div>
+              {this.state.currentUser !== null && this.state.currentUser !== undefined ? 
+              (
+                <div>
+                  <Row>
+                    <Input s={12} label="Comment" value={this.state.Comment} onChange={this.handleChangeComment.bind(this)}/>
+                  </Row>
+                  <div>
+                    <Button onClick={this.addComment.bind(this)}> Submit Comment </Button>
+                  </div>
+                </div>
+              ):(
+                <div>
+                </div>
+              )}
+              
+            </div>
+
+            
+
+            <div className="section">
               {this.state.OldComment === undefined || this.state.OldComment === null || this.state.OldComment === "" ?
                 (
                   <div>
@@ -214,9 +243,9 @@ class Detail extends Component{
                 ) : (
                   <div>
                     {Object.keys(this.state.OldComment).map((comment, i) => 
-                      <div key={i}>
+                      <div key={i} className="comments">
                         {this.state.OldComment[comment].Comment}
-                        <div style={{paddingLeft:20 }}>
+                        <div className="commentBy">
                           Posted by {this.state.OldComment[comment].Commentor}
                         </div>
                       </div>

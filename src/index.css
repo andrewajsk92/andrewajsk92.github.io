@@ -4,6 +4,14 @@ body {
   font-family: GillSans;
 }
 
+.navbar {
+  background-color: #81c784;
+}
+
+.navbarMoreOptions{
+  background-color: #a5d6a7;
+}
+
 .noImageIcon {
   max-height: 100%;
   max-width: 100%;
@@ -16,4 +24,14 @@ body {
 
 .signInOrUpError {
   color: red;
+}
+
+.comments{
+  font-size: 25px;
+}
+
+.commentBy{
+  padding-left: 20px;
+  font-size: 15px;
+  color: #009688;
 }

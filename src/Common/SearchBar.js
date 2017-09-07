@@ -117,7 +117,7 @@ class Content extends Component{
         title={<Link to={"/Detail/" + this.props.BuyOrSell + "/" +this.props.contentData.Key} > {this.props.contentData.Title} </Link>}
         reveal={<p>{this.props.contentData.Description}</p>}
       >
-        <p> {this.props.contentData.User} </p>
+        <p> {this.props.contentData.OriginalPoster} </p>
         <p>${this.props.contentData.Price} / distance </p>
       </Card>
     )

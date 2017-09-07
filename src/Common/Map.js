@@ -30,6 +30,9 @@ class Map extends Component{
 
   render(){
     const markers = this.props.markers || []
+    // console.log(navigator.geolocation.getCurrentPosition((currentPosition) => {
+    //   console.log(currentPosition.coords);
+    // }));
     return(
       <div>
         <GoogleMap

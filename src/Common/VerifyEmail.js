@@ -16,12 +16,14 @@ class VerifyEmail extends Component{
   }
 
   verify(){
-    firebase.auth().currentUser.sendEmailVerification().then(function() {
-     // Email sent.
-     console.log("VERIFIED");
+    firebase.auth().currentUser.sendEmailVerification().then((response) => {
+      if(response === 201){
+        // Email sent.
+        console.log("VERIFIED");
+      }
     }, function(error) {
-     // An error happened.
-     console.log("ERROR");
+      // An error happened.
+      console.log("ERROR");
     });
 
   }
