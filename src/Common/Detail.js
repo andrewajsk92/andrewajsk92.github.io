@@ -10,7 +10,8 @@ import * as firebase from 'firebase';
 import NoImageIcon from './NoImageIcon.jpeg';
 
 
-import Map from './Map.js'
+import Map from './Map.js';
+import GoogleMaps from './GoogleMaps.js';
 
 class Detail extends Component{
   constructor(props){
@@ -129,7 +130,7 @@ class Detail extends Component{
   }
 
   render(){
-    console.log(this.state.currentUser);
+    // console.log(this.state.currentUser);
     if(this.state.redirect === true){
       return <Redirect to="/" />
     }
@@ -165,12 +166,8 @@ class Detail extends Component{
 
             <br />
 
-            <div>
-              <Map 
-                center={{lat:40.728199, lng:-73.9894738}}
-                zoom={16}
-                containerElement={<div style={{height:400, width:400}} />} 
-                mapElement={<div style={{height:400, width:400}} />}/>
+            <div className="googleMaps" >
+              <GoogleMaps />
             </div>
           </Col>
 
@@ -264,4 +261,9 @@ class Detail extends Component{
 
 export default Detail;
 
-
+// <Map 
+//                 className="googleMaps"
+//                 center={{lat:40.728199, lng:-73.9894738}}
+//                 zoom={16}
+//                 containerElement={<div />} 
+//                 mapElement={<div className="googleMaps"/>}/>

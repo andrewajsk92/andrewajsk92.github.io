@@ -6,7 +6,9 @@ class Map extends Component{
   constructor(props){
     super(props);
     this.state = {
-      map: null
+      map: null,
+      currentPosition: '',
+      center: {lat:40.728199, lng:-73.9894738}
     }
 
   }
@@ -19,7 +21,13 @@ class Map extends Component{
     if(this.state.map != null)
       return
     this.setState({
-      map:map
+      map: map
+    })
+    navigator.geolocation.getCurrentPosition((currentPosition) => {
+      console.log(currentPosition.coords);
+      this.setState({
+        center: {lat: currentPosition.coords.latitude, lng: currentPosition.coords.longitude}
+      })
     })
   }
 
@@ -29,10 +37,10 @@ class Map extends Component{
   }
 
   render(){
+    console.log(this.state.center);
+    console.log(this.props.center);
     const markers = this.props.markers || []
-    // console.log(navigator.geolocation.getCurrentPosition((currentPosition) => {
-    //   console.log(currentPosition.coords);
-    // }));
+    
     return(
       <div>
         <GoogleMap
@@ -40,7 +48,7 @@ class Map extends Component{
           onZoomChanged={this.zoomChanged.bind(this)}
           onDragEnd={this.mapMoved.bind(this)}
           defaultZoom={this.props.zoom}
-          defaultCenter={this.props.center}>
+          defaultCenter={this.state.center}>
           {markers.map((marker, index) => (
             <Marker {...marker} />
             )
